@@ -1,0 +1,9 @@
+{
+  "singleAttributePerLine": true,
+  "singleQuote": false,
+  "printWidth": 120,
+  "bracketSameLine": false,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "plugins": ["prettier-plugin-organize-imports", "prettier-plugin-tailwindcss", "prettier-plugin-jsdoc"]
+}

@@ -1,0 +1,7 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.configPath": ".prettierrc.json",
+  "workbench.editor.tabSizingFixedMaxWidth": 120,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true
+}
