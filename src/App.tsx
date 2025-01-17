@@ -12,6 +12,7 @@ export default function App() {
     <QueryProvider>
       <Router>
         <Routes>
+          {/* Home Routes */}
           <Route
             path={routes.index}
             element={<BoardLayout />}
@@ -20,6 +21,7 @@ export default function App() {
               index
               element={<Home />}
             />
+            {/* Events Routes */}
             <Route path={routes.events.index}>
               <Route
                 index
@@ -30,21 +32,23 @@ export default function App() {
                 element={<Event />}
               />
             </Route>
+            {/* Account Routes */}
             <Route path={routes.account.index}>
               <Route
-                index
+                path={routes.account.profile}
                 element={<AccountProfile />}
               />
               <Route
-                index
+                path={routes.account.books}
                 element={<AccountBooks />}
               />
               <Route
-                index
+                path={routes.account.favorites}
                 element={<AccountFavorites />}
               />
             </Route>
           </Route>
+          {/* Authentication Routes */}
           <Route element={<AuthLayout />}>
             <Route
               path={routes.auth.login}

@@ -5,9 +5,10 @@ export const routes = {
     eventDetails: ":id_event",
   },
   account: {
-    index: "profile",
-    books: "profile/books",
-    favorites: "profile/favorites",
+    index: "account/",
+    profile: "profile",
+    books: "books",
+    favorites: "favorites",
   },
   auth: {
     login: "login",
