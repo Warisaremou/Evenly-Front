@@ -27,15 +27,6 @@ export default function LoginForm() {
         </div>
       </div>
 
-      <div className="flex justify-end">
-        <Link
-          className="external-link"
-          to={`/${routes.auth.forgotPassword}`}
-        >
-          Forgot password ?
-        </Link>
-      </div>
-
       <Button
         className="w-full"
         type="submit"
