@@ -1,9 +1,11 @@
-import { AuthLayout, BoardLayout } from "@/components/layouts";
+import { AuthLayout, BoardLayout, SidebarLayout } from "@/components/layouts";
 import QueryProvider from "@/lib/providers/query-client-provider";
 import { routes } from "@/lib/routes";
 import { Home, NotFound } from "@/pages";
 import { AccountBooks, AccountFavorites, AccountProfile } from "@/pages/account";
 import { Login, Register } from "@/pages/auth";
+import { DashboardOrders, DashboardProfile, DashboardTickets } from "@/pages/dashboard";
+import { DashboardAddEvent, DashboardAddTickets, DashboardEvents } from "@/pages/dashboard/events";
 import { Event, Events } from "@/pages/events";
 import { Route, BrowserRouter as Router, Routes } from "react-router";
 
@@ -57,6 +59,42 @@ export default function App() {
             <Route
               path={routes.auth.register}
               element={<Register />}
+            />
+          </Route>
+          {/* Dashboard Routes */}
+          <Route
+            path={routes.dashboard.index}
+            element={<SidebarLayout />}
+          >
+            {/* Dashboard Events Routes */}
+            <Route path={routes.dashboard.events.index}>
+              <Route
+                index
+                element={<DashboardEvents />}
+              />
+              <Route
+                path={routes.dashboard.events.addEvent}
+                element={<DashboardAddEvent />}
+              />
+              <Route
+                path={routes.dashboard.events.addTickets}
+                element={<DashboardAddTickets />}
+              />
+            </Route>
+            {/* Dashboard Tickets Routes */}
+            <Route
+              path={routes.dashboard.tickets.index}
+              element={<DashboardTickets />}
+            />
+            {/* Dashboard Orders Routes */}
+            <Route
+              path={routes.dashboard.orders.index}
+              element={<DashboardOrders />}
+            />
+            {/* Dashboard Profile Routes */}
+            <Route
+              path={routes.dashboard.profile.index}
+              element={<DashboardProfile />}
             />
           </Route>
 

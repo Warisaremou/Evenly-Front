@@ -15,19 +15,20 @@ export const routes = {
     register: "register",
   },
   dashboard: {
+    index: "dashboard/",
     events: {
-      index: "dashboard/events",
-      addEvent: "dashboard/events/add-event",
-      addTicket: "dashboard/events/add-tickets",
+      index: "events/",
+      addEvent: "add-event",
+      addTickets: "add-tickets",
     },
     tickets: {
-      index: "dashboard/tickets",
+      index: "tickets",
     },
     orders: {
-      index: "dashboard/orders",
+      index: "orders",
     },
     profile: {
-      index: "dashboard/profile",
+      index: "profile",
     },
   },
 };
