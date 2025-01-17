@@ -8,7 +8,7 @@ export default function Header({ title, description, children, className }: Prop
     <div className={cn(className)}>
       <div className="flex flex-col items-center max-w-2xl mx-auto gap-8">
         <div className="flex flex-col items-center gap-y-3">
-          <h1 className="text-center text-4xl font-bh-bold md:text-5xl">{title}</h1>
+          <h1 className="text-center text-4xl font-body-semibold md:text-5xl">{title}</h1>
           <p className="text-foreground max-md:text-sm text-center">{description}</p>
         </div>
         {children}

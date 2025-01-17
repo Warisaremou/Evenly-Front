@@ -9,7 +9,7 @@ export default {
       center: true,
       padding: "1rem",
       screens: {
-        "2xl": "1200px",
+        "2xl": "1076px",
       },
     },
     extend: {
@@ -30,12 +30,22 @@ export default {
           foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          100: "hsl(var(--primary-100))",
+          200: "hsl(var(--primary-200))",
+          300: "hsl(var(--primary-300))",
+          400: "hsl(var(--primary-400))",
+          500: "hsl(var(--primary-500))",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+        grey: {
+          100: "hsl(var(--grey-100))",
+          200: "hsl(var(--grey-200))",
+          300: "hsl(var(--grey-300))",
+          400: "hsl(var(--grey-400))",
+          500: "hsl(var(--grey-500))",
+        },
+        state: {
+          success: "hsl(var(--state-success))",
+          error: "hsl(var(--state-error))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -54,10 +64,11 @@ export default {
         ring: "hsl(var(--ring))",
       },
       fontFamily: {
-        "bh-regular": ["bh-regular", ...fontFamily.sans],
-        "bh-medium": ["bh-medium", ...fontFamily.sans],
-        "bh-semibold": ["bh-semibold", ...fontFamily.sans],
-        "bh-bold": ["bh-bold", ...fontFamily.sans],
+        "body-regular": ["geist-regular", ...fontFamily.sans],
+        "body-medium": ["geist-medium", ...fontFamily.sans],
+        "body-semibold": ["geist-semibold", ...fontFamily.sans],
+        "heading-semibold": ["bricolage-grotesque-semibold", ...fontFamily.sans],
+        "heading-bold": ["bricolage-grotesque-semibold", ...fontFamily.sans],
       },
     },
   },

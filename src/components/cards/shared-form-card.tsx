@@ -13,8 +13,8 @@ export default function SharedFormCard({ title, description, children }: Props) 
       <div className="flex flex-col items-center gap-y-5">
         <Logo />
         <div className="text-center">
-          <h1 className="text-2xl font-bh-bold">{title}</h1>
-          <p className="font-bh-medium text-muted-foreground">{description}</p>
+          <h1 className="text-2xl font-body-semibold">{title}</h1>
+          <p className="font-body-medium text-muted-foreground">{description}</p>
         </div>
       </div>
 

@@ -3,20 +3,24 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "bh-regular";
-  src: url("./fonts/SpaceGrotesk-Regular.ttf");
+  font-family: "geist-regular";
+  src: url("./fonts/Geist-Regular.ttf");
 }
 @font-face {
-  font-family: "bh-medium";
-  src: url("./fonts/SpaceGrotesk-Medium.ttf");
+  font-family: "geist-medium";
+  src: url("./fonts/Geist-Medium.ttf");
 }
 @font-face {
-  font-family: "bh-semibold";
-  src: url("./fonts/SpaceGrotesk-SemiBold.ttf");
+  font-family: "geist-semibold";
+  src: url("./fonts/Geist-SemiBold.ttf");
 }
 @font-face {
-  font-family: "bh-bold";
-  src: url("./fonts/SpaceGrotesk-Bold.ttf");
+  font-family: "bricolage-grotesque-semibold";
+  src: url("./fonts/BricolageGrotesque-SemiBold.ttf");
+}
+@font-face {
+  font-family: "bricolage-grotesque-bold";
+  src: url("./fonts/BricolageGrotesque-Bold.ttf");
 }
 
 @layer base {
@@ -27,10 +31,22 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* PRIMARY COLORS */
+    --primary-100: 225, 100%, 97%;
+    --primary-200: 226, 48%, 65%;
+    --primary-300: 226, 71%, 40%;
+    --primary-400: 226, 71%, 28%;
+    --primary-500: 226, 71%, 25%;
+    /* GREY COLORS */
+    --grey-100: 220, 14%, 96%;
+    --grey-200: 0, 0%, 97%;
+    --grey-300: 220, 20%, 94%;
+    --grey-400: 215, 8%, 50%;
+    --grey-500: 220, 11%, 11%;
+    /* STATE COLORS */
+    --state-success: 142, 76%, 36%;
+    --state-error: 0, 99%, 40%;
+
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 210 40% 96.1%;
@@ -42,41 +58,19 @@
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
   }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9;
-  }
 }
 
 @layer base {
   * {
-    @apply m-0 border-border p-0;
+    @apply m-0 box-border p-0;
   }
 
   body {
-    @apply min-h-screen bg-background font-bh-regular text-foreground;
+    @apply font-body-regular bg-grey-100 text-grey-500 min-h-screen;
   }
 
   .external-link {
-    @apply text-sm font-medium text-muted-foreground transition-colors duration-200 ease-in-out hover:underline;
+    @apply font-body-medium text-sm text-muted-foreground transition-colors duration-200 ease-in-out hover:underline;
   }
 
   .form-input {
