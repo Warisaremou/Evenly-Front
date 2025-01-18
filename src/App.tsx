@@ -1,4 +1,4 @@
-import { AuthLayout, BoardLayout, SidebarLayout } from "@/components/layouts";
+import { AccountLayout, AuthLayout, BoardLayout, DashboardLayout } from "@/components/layouts";
 import QueryProvider from "@/lib/providers/query-client-provider";
 import { routes } from "@/lib/routes";
 import { Home, NotFound } from "@/pages";
@@ -35,7 +35,10 @@ export default function App() {
               />
             </Route>
             {/* Account Routes */}
-            <Route path={routes.account.index}>
+            <Route
+              path={routes.account.index}
+              element={<AccountLayout />}
+            >
               <Route
                 path={routes.account.profile}
                 element={<AccountProfile />}
@@ -64,7 +67,7 @@ export default function App() {
           {/* Dashboard Routes */}
           <Route
             path={routes.dashboard.index}
-            element={<SidebarLayout />}
+            element={<DashboardLayout />}
           >
             {/* Dashboard Events Routes */}
             <Route path={routes.dashboard.events.index}>

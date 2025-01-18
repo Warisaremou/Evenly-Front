@@ -11,8 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { routes } from "@/lib/routes";
-import { User } from "lucide-react";
+import { siteConfig } from "@/config/site";
+import { CircleUser } from "lucide-react";
 import { Link } from "react-router";
 
 export default function UserProfileDropdown() {
@@ -21,9 +21,9 @@ export default function UserProfileDropdown() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="secondary"
-          className="relative size-11 rounded-full"
+          className="relative size-10 rounded-full"
         >
-          <Avatar className="border">
+          <Avatar className="border border-primary-100">
             <AvatarImage
               src={avatar}
               alt={`johndoe86`}
@@ -33,22 +33,25 @@ export default function UserProfileDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-56"
+        className="w-56 px-3"
         align="end"
         forceMount
       >
-        <DropdownMenuLabel className="font-normal">
-          <p className="text-xs leading-none text-grey-500">johndoe@gmail.com</p>
+        <DropdownMenuLabel className="font-body-medium">
+          <p className="text-sm py-2 leading-none text-grey-500">johndoe@gmail.com</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem
             asChild
-            className="cursor-pointer"
+            className="cursor-pointer text-grey-400 px-4 h-10"
           >
-            <Link to={routes.account.index}>
-              <User
-                className="mr-2 size-4"
+            <Link
+              to={siteConfig.accountNav[0].href}
+              className="font-body-medium flex items-center gap-2"
+            >
+              <CircleUser
+                className="size-5"
                 aria-hidden="true"
               />
               Account
@@ -56,7 +59,7 @@ export default function UserProfileDropdown() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem className="pl-0">
           <LogoutButton />
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -1,12 +1,14 @@
 import CustomLink from "@/components/custom-link";
 import Logo from "@/components/logo";
-// import UserProfileDropdown from "@/components/user-profile-dropdown";
 import { Button } from "@/components/ui/button";
+import UserProfileDropdown from "@/components/user-profile-dropdown";
 import { siteConfig } from "@/config/site";
 import { routes } from "@/lib/routes";
 import { Link, Outlet } from "react-router";
 
 export default function BoardLayout() {
+  const isAuth = true;
+
   return (
     <div className="container flex flex-col min-h-screen w-full gap-y-14">
       {/* Navbar */}
@@ -22,26 +24,33 @@ export default function BoardLayout() {
           ))}
         </ul>
 
-        <div className="flex gap-2">
-          <Button
-            variant="primary"
-            asChild
-          >
-            <Link to={routes.auth.register}>Create account</Link>
-          </Button>
-          <Button
-            variant="secondary"
-            asChild
-            className="max-sm:hidden"
-          >
-            <Link to={routes.auth.login}>Login</Link>
-          </Button>
-          {/* <UserProfileDropdown /> */}
-        </div>
+        <>
+          {isAuth ? (
+            <UserProfileDropdown />
+          ) : (
+            <div className="flex gap-2">
+              <Button
+                variant="primary"
+                asChild
+              >
+                <Link to={routes.auth.register}>Create account</Link>
+              </Button>
+              <Button
+                variant="secondary"
+                asChild
+                className="max-sm:hidden"
+              >
+                <Link to={routes.auth.login}>Login</Link>
+              </Button>
+            </div>
+          )}
+        </>
       </nav>
 
       {/* Children */}
-      <Outlet />
+      <div className="flex-1 h-full">
+        <Outlet />
+      </div>
 
       {/* Footer */}
       <div className="flex max-md:flex-col items-center justify-center border-t border-grey-300 py-12 px-5 max-md:gap-2 gap-16">
