@@ -1,17 +1,17 @@
-# CMS BLOG FRONTEND
+# EVENLY FRONTEND
 
 ### RUN THE PROJECT LOCALY
 
 Clone the project
 
 ```bash
-  git clone https://github.com/Warisaremou/cms-blog-frontend.git
+  git clone https://github.com/Warisaremou/Evenly-Front.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd cms-blog-frontend
+  cd Evenly-Front
 ```
 
 Install dependencies
