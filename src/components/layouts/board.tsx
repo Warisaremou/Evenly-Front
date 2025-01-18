@@ -53,7 +53,7 @@ export default function BoardLayout() {
       </div>
 
       {/* Footer */}
-      <div className="flex max-md:flex-col items-center justify-center border-t border-grey-300 py-12 px-5 max-md:gap-2 gap-16">
+      <div className="flex max-md:flex-col items-center justify-center border-t border-grey-300 py-5 lg:py-12 px-5 max-md:gap-2 gap-16">
         <h5 className="text-xs">Privacy Policy</h5>
         <h5 className="text-xs">Terms of Service</h5>
         <h5 className="text-xs">© 2025 Evenly. All Rights Reserved.</h5>
