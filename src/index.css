@@ -67,7 +67,7 @@
   }
 
   body {
-    @apply bg-grey-100 font-body-regular text-grey-500 min-h-screen;
+    @apply min-h-screen bg-grey-100 font-body-regular text-grey-500;
   }
 
   .external-link {
