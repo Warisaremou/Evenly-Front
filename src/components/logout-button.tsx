@@ -1,15 +1,16 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 
 export default function LogoutButton() {
   return (
-    <div className="flex w-full cursor-pointer items-center py-[2px] font-medium text-destructive dark:text-red-500">
+    <Button variant="destructive-secondary">
       <LogOut
-        className="mr-2 size-4"
+        className="size-4"
         aria-hidden="true"
       />
-      <span>Se déconnecter</span>
-    </div>
+      <span>Logout</span>
+    </Button>
   );
 }

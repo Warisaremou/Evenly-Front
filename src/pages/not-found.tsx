@@ -7,11 +7,11 @@ export default function NotFound() {
     <div className="flex min-h-screen items-center justify-center">
       <div className="flex flex-col items-center gap-y-8">
         <div className="text-center">
-          <h1 className="text-[6rem] font-body-semibold leading-none text-muted-foreground/30 lg:text-[9rem]">404</h1>
-          <span className="font-body-medium text-muted-foreground">Page Not Found</span>
+          <h1 className="text-[6rem] font-heading-bold leading-none text-grey-300 lg:text-[9rem]">404</h1>
+          <span className="font-body-medium text-sm text-grey-400">Page Not Found</span>
         </div>
         <Button
-          variant="outline"
+          variant="secondary"
           asChild
         >
           <Link to={routes.index}>Go back to Home</Link>

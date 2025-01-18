@@ -5,21 +5,22 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-body-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/10 focus-visible:ring-offset-0 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-lg text-sm font-body-medium ring-offset-grey-100 transition-colors focus-visible:outline-none focus-visible:ring-primary-200 focus-visible:ring-1 focus-visible:ring-offset-0 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         primary: "bg-primary-300 text-grey-100 hover:bg-primary-400 disabled:bg-primary-200",
         secondary: "bg-primary-100 text-primary-300 disabled:text-primary-200",
-        destructive: "bg-destructive/20 focus-visible:ring-destructive/30 text-destructive hover:bg-destructive/30",
-        link: "text-primary underline-offset-4 hover:underline",
+        destructive: "bg-state-error focus-visible:ring-state-error-foreground text-state-error-foreground",
+        "destructive-secondary": "hover:bg-state-error focus-visible:ring-state-error text-state-error-foreground",
+        tertiary: "text-grey-500 bg-grey-100 hover:bg-primary-100 hover:text-primary-300 focus-visible:ring-grey-300",
       },
       size: {
-        default: "h-10 px-4 py-2",
+        default: "h-10 px-4 py-2.5",
         xs: "h-7 px-2",
         sm: "h-9 px-3",
         lg: "h-11 px-8",
-        icon: "h-10 w-10",
+        "icon-sm": "h-8 w-8",
       },
     },
     defaultVariants: {

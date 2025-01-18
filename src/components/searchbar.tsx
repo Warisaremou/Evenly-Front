@@ -10,12 +10,12 @@ const Searchbar = React.forwardRef<HTMLInputElement, InputProps>(({ className, .
     <div className="relative w-full max-w-md">
       <Search
         size={22}
-        className="absolute left-3 top-1/2 -translate-y-1/2 text-accent-foreground/50"
+        className="absolute left-3 top-1/2 -translate-y-1/2 text-grey-400"
       />
 
       <Input
         type="search"
-        className={cn("h-11 rounded-full border border-accent-foreground/10 bg-accent pl-10", className)}
+        className={cn("pl-10", className)}
         ref={ref}
         {...props}
       />

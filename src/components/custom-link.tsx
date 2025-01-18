@@ -9,8 +9,8 @@ export default function CustomLink({ item }: { item: NavItem }) {
   return (
     <Link
       className={cn(
-        "rounded-full px-4 py-2 text-sm text-foreground transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/10 focus-visible:ring-offset-0 hover:bg-accent",
-        isActive ? "bg-border font-body-semibold" : "font-body-medium hover:bg-accent",
+        "rounded-lg h-10 px-4 py-2.5 text-sm text-grey-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grey-300 focus-visible:ring-offset-0 hover:bg-primary-100",
+        isActive && "bg-primary-100 font-body-medium",
       )}
       to={item.href}
     >

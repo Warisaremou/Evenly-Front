@@ -46,6 +46,7 @@ export default {
         state: {
           success: "hsl(var(--state-success))",
           error: "hsl(var(--state-error))",
+          "error-foreground": "hsl(var(--state-error-foregroud))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",

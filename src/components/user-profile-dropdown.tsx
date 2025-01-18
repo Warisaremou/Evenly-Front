@@ -38,10 +38,7 @@ export default function UserProfileDropdown() {
         forceMount
       >
         <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">johndoe89</p>
-            <p className="text-xs leading-none text-muted-foreground">johndoe@gmail.com</p>
-          </div>
+          <p className="text-xs leading-none text-grey-500">johndoe@gmail.com</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
@@ -49,17 +46,17 @@ export default function UserProfileDropdown() {
             asChild
             className="cursor-pointer"
           >
-            <Link to={routes.profile.index}>
+            <Link to={routes.account.index}>
               <User
                 className="mr-2 size-4"
                 aria-hidden="true"
               />
-              Profile
+              Account
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="hover:!bg-destructive/10 dark:hover:!bg-red-500/30">
+        <DropdownMenuItem>
           <LogoutButton />
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -1,14 +1,16 @@
 import CustomLink from "@/components/custom-link";
 import Logo from "@/components/logo";
 // import UserProfileDropdown from "@/components/user-profile-dropdown";
+import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { Outlet } from "react-router";
+import { routes } from "@/lib/routes";
+import { Link, Outlet } from "react-router";
 
 export default function BoardLayout() {
   return (
-    <div className="container flex flex-col min-h-screen w-full">
+    <div className="container flex flex-col min-h-screen w-full gap-y-14">
       {/* Navbar */}
-      <nav className="flex flex-row items-center justify-between py-4">
+      <nav className="flex flex-row items-center justify-between py-4 bg-grey-100">
         <Logo />
 
         <ul className="flex flex-row items-center gap-x-1 md:gap-x-4 w-full justify-center">
@@ -21,19 +23,19 @@ export default function BoardLayout() {
         </ul>
 
         <div className="flex gap-2">
-          {/* <Button
-            variant="default"
+          <Button
+            variant="primary"
             asChild
           >
-            <Link to={routes.auth.register}>Create Account</Link>
+            <Link to={routes.auth.register}>Create account</Link>
           </Button>
           <Button
-            variant="ghost"
+            variant="secondary"
             asChild
-            className="border border-muted-foreground/15 max-sm:hidden"
+            className="max-sm:hidden"
           >
             <Link to={routes.auth.login}>Login</Link>
-          </Button> */}
+          </Button>
           {/* <UserProfileDropdown /> */}
         </div>
       </nav>
@@ -42,9 +44,10 @@ export default function BoardLayout() {
       <Outlet />
 
       {/* Footer */}
-      <div className="flex items-center justify-between border-t border-secondary py-8">
-        <Logo />
-        <h4 className="text-sm">©2024_All Rights Reserved</h4>
+      <div className="flex max-md:flex-col items-center justify-center border-t border-grey-300 py-12 px-5 max-md:gap-2 gap-16">
+        <h5 className="text-xs">Privacy Policy</h5>
+        <h5 className="text-xs">Terms of Service</h5>
+        <h5 className="text-xs">© 2025 Evenly. All Rights Reserved.</h5>
       </div>
     </div>
   );
