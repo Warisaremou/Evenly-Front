@@ -1,3 +1,4 @@
+import { NoDataFoundCard } from "@/components/cards";
 import { Searchbar } from "@/components/searchbar";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -12,7 +13,7 @@ export default function DashboardEvents() {
         <div className="flex items-center gap-2 justify-between">
           <h3 className="section-header-title">Events</h3>
           <Button asChild>
-            <Link to={routes.dashboard.events.addEvent}>Add a new event</Link>
+            <Link to={routes.dashboard.events.addEvent}>Add new event</Link>
           </Button>
         </div>
 
@@ -33,15 +34,15 @@ export default function DashboardEvents() {
             </Select>
           </div>
 
-          <div className="flex flex-col items-center gap-3">
-            <div className="text-grey-400 flex flex-col gap-1.5 items-center">
-              <Inbox />
-              <p className="text-sm">No event found</p>
-            </div>
-            <Button asChild>
-              <Link to={routes.dashboard.events.addEvent}>Add a new event</Link>
-            </Button>
-          </div>
+          <NoDataFoundCard
+            Icon={<Inbox />}
+            message="No event found"
+            cta={
+              <Button asChild>
+                <Link to={routes.dashboard.events.addEvent}>Add new event</Link>
+              </Button>
+            }
+          />
         </div>
       </div>
     </div>

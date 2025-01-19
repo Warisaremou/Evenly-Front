@@ -1,4 +1,4 @@
-import { AccountLayout, AuthLayout, BoardLayout, DashboardLayout } from "@/components/layouts";
+import { AccountLayout, AuthLayout, BoardLayout, DashboardLayout, EventsManagementLayout } from "@/components/layouts";
 import QueryProvider from "@/lib/providers/query-client-provider";
 import { routes } from "@/lib/routes";
 import { Home, NotFound } from "@/pages";
@@ -75,14 +75,16 @@ export default function App() {
                 index
                 element={<DashboardEvents />}
               />
-              <Route
-                path={routes.dashboard.events.addEvent}
-                element={<DashboardAddEvent />}
-              />
-              <Route
-                path={routes.dashboard.events.addTickets}
-                element={<DashboardAddTickets />}
-              />
+              <Route element={<EventsManagementLayout />}>
+                <Route
+                  path={routes.dashboard.events.addEvent}
+                  element={<DashboardAddEvent />}
+                />
+                <Route
+                  path={routes.dashboard.events.addTickets}
+                  element={<DashboardAddTickets />}
+                />
+              </Route>
             </Route>
             {/* Dashboard Tickets Routes */}
             <Route

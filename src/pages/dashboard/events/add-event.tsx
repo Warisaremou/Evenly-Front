@@ -1,3 +1,9 @@
+import { AddEditEventForm } from "@/components/forms";
+
 export default function DashboardAddEvent() {
-  return <div>Dashboard Add Event Page</div>;
+  return (
+    <div>
+      <AddEditEventForm />
+    </div>
+  );
 }

@@ -2,14 +2,15 @@ import { useLocalStorage } from "@/hooks/use-localstorage";
 import { routes } from "@/lib/routes";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const { getItem } = useLocalStorage();
 
 const accessToken = getItem("accessToken");
 
 const api = axios.create({
-  // eslint-disable-next-line no-undef
-  baseURL: process.env.API_BASE_URL,
+  baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
