@@ -70,6 +70,14 @@
     @apply min-h-screen bg-grey-100 font-body-regular text-grey-500;
   }
 
+  .heading1 {
+    @apply text-4xl;
+  }
+
+  .overlay {
+    @apply absolute inset-0 z-0 size-full rounded-3xl bg-grey-500 bg-opacity-60 opacity-50;
+  }
+
   .external-link {
     @apply font-body-medium text-sm text-muted-foreground transition-colors duration-200 ease-in-out hover:underline;
   }

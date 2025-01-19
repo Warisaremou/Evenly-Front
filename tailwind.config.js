@@ -71,6 +71,9 @@ export default {
         "heading-semibold": ["bricolage-grotesque-semibold", ...fontFamily.sans],
         "heading-bold": ["bricolage-grotesque-semibold", ...fontFamily.sans],
       },
+      backgroundImage: {
+        "hero-background": "url('src/assets/images/hero-bg.avif')",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
