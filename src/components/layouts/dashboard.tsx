@@ -29,7 +29,7 @@ export default function DashboardLayout() {
           <h3 className="font-body-medium text-grey-500">Empire Group</h3>
         </header>
         {/* Children */}
-        <div className="w-full mx-auto max-w-[50rem] max-md:container max-md:py-5 py-10">
+        <div className="w-full mx-auto max-w-[50rem] max-lg:container max-lg:py-5 py-10">
           <Outlet />
         </div>
       </div>

@@ -74,6 +74,10 @@
     @apply text-4xl;
   }
 
+  .section-header-title {
+    @apply font-heading-semibold text-2xl text-grey-500;
+  }
+
   .overlay {
     @apply absolute inset-0 z-0 size-full rounded-3xl bg-grey-500 bg-opacity-60 opacity-50;
   }

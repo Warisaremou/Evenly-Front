@@ -9,7 +9,7 @@ const Searchbar = React.forwardRef<HTMLInputElement, InputProps>(({ className, .
   return (
     <div className="relative w-full max-w-md">
       <Search
-        size={22}
+        size={20}
         className="absolute left-3 top-1/2 -translate-y-1/2 text-grey-400"
       />
 
