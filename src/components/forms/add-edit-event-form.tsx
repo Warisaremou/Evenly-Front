@@ -1,16 +1,16 @@
+import FieldErrorMessage from "@/components/field-error-message";
+import Imageupload from "@/components/image-upload";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { routes } from "@/lib/routes";
 import { CreateAndUpdateEvent, createAndUpdateEventSchema } from "@/lib/schemas/events";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import FieldErrorMessage from "../field-error-message";
-import Imageupload from "../image-upload";
-import { Badge } from "../ui/badge";
-import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
 
 const categories = [
   {

@@ -19,6 +19,7 @@ export const routes = {
     events: {
       index: "events/",
       addEvent: "add-event",
+      editEvent: ":id_event/edit-event",
       addTickets: "add-tickets",
     },
     tickets: {

@@ -5,7 +5,7 @@ import { Home, NotFound } from "@/pages";
 import { AccountBooks, AccountFavorites, AccountProfile } from "@/pages/account";
 import { Login, Register } from "@/pages/auth";
 import { DashboardOrders, DashboardProfile, DashboardTickets } from "@/pages/dashboard";
-import { DashboardAddEvent, DashboardAddTickets, DashboardEvents } from "@/pages/dashboard/events";
+import { DashboardAddEvent, DashboardAddTickets, DashboardEditEvent, DashboardEvents } from "@/pages/dashboard/events";
 import { Event, Events } from "@/pages/events";
 import { Route, BrowserRouter as Router, Routes } from "react-router";
 
@@ -79,6 +79,10 @@ export default function App() {
                 <Route
                   path={routes.dashboard.events.addEvent}
                   element={<DashboardAddEvent />}
+                />
+                <Route
+                  path={routes.dashboard.events.editEvent}
+                  element={<DashboardEditEvent />}
                 />
                 <Route
                   path={routes.dashboard.events.addTickets}
