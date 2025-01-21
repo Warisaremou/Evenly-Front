@@ -15,6 +15,11 @@ export interface NavItemWithOptionalChildren extends NavItem {
 
 export type MainNavItem = NavItemWithOptionalChildren;
 
+// --------------------- API RESPONSE TYPES --------------------- //
+export interface ApiResponse {
+  message: string;
+}
+
 // --------------------- EVENTS TYPES --------------------- //
 export interface Event {
   id: string;
