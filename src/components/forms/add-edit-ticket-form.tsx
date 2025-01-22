@@ -1,7 +1,6 @@
-import FieldErrorMessage from "@/components/field-error-message";
 import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CreateAndUpdateTicket, createAndUpdateTicketSchema } from "@/lib/schemas/tickets";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,12 +11,7 @@ type Props = {
 };
 
 export default function AddEditTicketForm({ onToogleDialog }: Props) {
-  const {
-    register,
-    handleSubmit,
-    // reset,
-    formState: { errors },
-  } = useForm<CreateAndUpdateTicket>({
+  const form = useForm<CreateAndUpdateTicket>({
     resolver: zodResolver(createAndUpdateTicketSchema),
     defaultValues: {
       name: "",
@@ -33,89 +27,113 @@ export default function AddEditTicketForm({ onToogleDialog }: Props) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-8"
-    >
-      <div className="space-y-4">
-        {/* Ticket type field */}
-        <div>
-          <div className="form-input">
-            <Label htmlFor="ticket_type">Ticket type</Label>
-            <Select>
-              <SelectTrigger className="flex-1">
-                <SelectValue
-                  id="ticket_type"
-                  placeholder="Select ticket type"
-                  {...register("ticket_type_id")}
-                />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="free">Free</SelectItem>
-                <SelectItem value="paid">Paid</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          {errors.ticket_type_id && <FieldErrorMessage errorMessage={errors.ticket_type_id.message} />}
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-8"
+      >
+        <div className="space-y-4">
+          {/* Ticket type field */}
+          <FormField
+            control={form.control}
+            name="ticket_type_id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Ticket type</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select ticket type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="free">Free</SelectItem>
+                    <SelectItem value="paid">Paid</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Ticket name field */}
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Ticket name"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Ticket quantity field */}
+          <FormField
+            control={form.control}
+            name="quantity"
+            render={({ field }) => (
+              <FormItem>
+                Available quantity
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="Ticket quantity"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Ticket price field */}
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Price</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="Ticket price"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
-        {/* Ticket name field */}
-        <div>
-          <div className="form-input">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              placeholder="Ticket name"
-              {...register("name")}
-            />
-          </div>
-          {errors.name && <FieldErrorMessage errorMessage={errors.name.message} />}
+        <div className="flex gap-2.5 justify-end">
+          <Button
+            variant="secondary"
+            onClick={(e) => {
+              onToogleDialog();
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            Cancel
+          </Button>
+          <Button type="submit">
+            Add ticket
+            <span className="sr-only"> Add ticket</span>
+          </Button>
         </div>
-
-        {/* Ticket quantity field */}
-        <div>
-          <div className="form-input">
-            <Label htmlFor="quantity">Available quantity</Label>
-            <Input
-              id="quantity"
-              type="number"
-              placeholder="Ticket quantity"
-              {...register("quantity")}
-            />
-          </div>
-          {errors.quantity && <FieldErrorMessage errorMessage={errors.quantity.message} />}
-        </div>
-
-        {/* Ticket price field */}
-        <div>
-          <div className="form-input">
-            <Label htmlFor="price">Price</Label>
-            <Input
-              id="price"
-              type="number"
-              placeholder="Ticket price"
-              {...register("price")}
-            />
-          </div>
-          {errors.price && <FieldErrorMessage errorMessage={errors.price.message} />}
-        </div>
-      </div>
-
-      <div className="flex gap-2.5 justify-end">
-        <Button
-          variant="secondary"
-          onClick={(e) => {
-            onToogleDialog();
-            e.preventDefault();
-          }}
-        >
-          Cancel
-        </Button>
-        <Button type="submit">
-          Add ticket
-          <span className="sr-only"> Add ticket</span>
-        </Button>
-      </div>
-    </form>
+      </form>
+    </Form>
   );
 }
