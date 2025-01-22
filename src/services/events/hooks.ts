@@ -1,5 +1,5 @@
 import { eventsKeys } from "@/services/events/keys";
-import { addEvent, getAllEvents, getEventById } from "@/services/events/queries";
+import { addEvent, getAllEvents, getEventById, getOrganizerEvents } from "@/services/events/queries";
 import { Event } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -15,6 +15,13 @@ export const useEvent = (id: string) => {
   return useQuery({
     queryKey: eventsKeys.event(id),
     queryFn: () => getEventById(id),
+  });
+};
+
+export const useOrganizerEvents = () => {
+  return useQuery({
+    queryKey: eventsKeys.organizerEvents,
+    queryFn: getOrganizerEvents,
   });
 };
 

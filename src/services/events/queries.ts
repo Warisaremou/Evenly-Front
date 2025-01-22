@@ -23,6 +23,16 @@ export const getEventById = async (id: string): Promise<Event> => {
 };
 
 /**
+ * Query to get organizer events
+ *
+ * @returns Promise<Event[]> - List of events
+ */
+export const getOrganizerEvents = async (): Promise<Event[]> => {
+  const response = await api.get("/events/organizer").then((res) => res);
+  return response.data;
+};
+
+/**
  * Query to add event
  *
  * @param {Event} event - Event data
