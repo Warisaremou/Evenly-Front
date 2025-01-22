@@ -1,9 +1,8 @@
-import FieldErrorMessage from "@/components/field-error-message";
 import Imageupload from "@/components/image-upload";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { routes } from "@/lib/routes";
 import { CreateAndUpdateEvent, createAndUpdateEventSchema } from "@/lib/schemas/events";
@@ -32,14 +31,7 @@ export default function AddEditEventForm() {
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    formState: { errors },
-    setError,
-  } = useForm<CreateAndUpdateEvent>({
+  const form = useForm<CreateAndUpdateEvent>({
     resolver: zodResolver(createAndUpdateEventSchema),
     defaultValues: {
       cover: null,
@@ -61,14 +53,14 @@ export default function AddEditEventForm() {
   };
 
   useEffect(() => {
-    reset({
+    form.reset({
       categories: selectedCategories,
     });
-  }, [selectedCategories, reset]);
+  }, [selectedCategories, form]);
 
   const onSubmit = (data: CreateAndUpdateEvent) => {
     if (data.cover == null) {
-      return setError("cover", {
+      return form.setError("cover", {
         type: "manual",
         message: "Please upload an image",
       });
@@ -77,116 +69,151 @@ export default function AddEditEventForm() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-8"
-    >
-      <div className="space-y-4">
-        {/* Image uploader */}
-        <div>
-          <div className="form-input">
-            <Imageupload
-              maxSize={2}
-              accept="image/png, image/jpeg, image/jpg"
-              onUpload={(file) => {
-                setValue("cover", file);
-              }}
-            />
-          </div>
-          {errors.cover && <FieldErrorMessage errorMessage={errors.cover.message} />}
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-8"
+      >
+        <div className="space-y-4">
+          {/* Image uploader */}
+          <FormField
+            control={form.control}
+            name="cover"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Imageupload
+                    maxSize={2}
+                    accept="image/png, image/jpeg, image/jpg"
+                    onUpload={(file) => {
+                      // field.setValue("cover", file);
+                      field.onChange(file);
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Categories field */}
+          <FormField
+            control={form.control}
+            name="categories"
+            render={() => (
+              <FormItem>
+                <FormLabel>Choose categories</FormLabel>
+                <FormControl>
+                  <div className="flex flex-wrap gap-2">
+                    {categories.map((category) => (
+                      <Badge
+                        variant={selectedCategories.includes(category.id) ? "default" : "secondary"}
+                        key={category.id}
+                        className="cursor-pointer"
+                        onClick={() => handleAddToSelectedCategories(category.id)}
+                      >
+                        {category.name}
+                      </Badge>
+                    ))}
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Event title field */}
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Event title"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Event description field */}
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    id="description"
+                    placeholder="Event description"
+                    rows={5}
+                    className="resize-none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Event location field */}
+          <FormField
+            control={form.control}
+            name="location"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Location</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Event location"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Event date & time field */}
+          <FormField
+            control={form.control}
+            name="date_time"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Date and Time</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Event date and time"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
-        {/* Categories field */}
-        <div>
-          <div className="form-input">
-            <Label htmlFor="categories">Choose categories</Label>
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <Badge
-                  variant={selectedCategories.includes(category.id) ? "default" : "secondary"}
-                  key={category.id}
-                  className="cursor-pointer"
-                  onClick={() => handleAddToSelectedCategories(category.id)}
-                >
-                  {category.name}
-                </Badge>
-              ))}
-            </div>
-          </div>
-          {errors.categories && <FieldErrorMessage errorMessage={errors.categories.message} />}
+        <div className="flex gap-2.5 justify-end">
+          <Button
+            variant="secondary"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(`/dashboard/${routes.dashboard.events.index}`);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button type="submit">
+            Add event
+            <span className="sr-only"> Add event</span>
+          </Button>
         </div>
-
-        {/* Event title field */}
-        <div>
-          <div className="form-input">
-            <Label htmlFor="title">Title</Label>
-            <Input
-              id="title"
-              placeholder="Event title"
-              {...register("title")}
-            />
-          </div>
-          {errors.title && <FieldErrorMessage errorMessage={errors.title.message} />}
-        </div>
-
-        {/* Event description field */}
-        <div>
-          <div className="form-input">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              placeholder="Event description"
-              rows={5}
-              className="resize-none"
-              {...register("description")}
-            />
-          </div>
-          {errors.description && <FieldErrorMessage errorMessage={errors.description.message} />}
-        </div>
-
-        {/* Event location field */}
-        <div>
-          <div className="form-input">
-            <Label htmlFor="location">Location</Label>
-            <Input
-              id="location"
-              placeholder="Event location"
-              {...register("location")}
-            />
-          </div>
-          {errors.location && <FieldErrorMessage errorMessage={errors.location.message} />}
-        </div>
-
-        {/* Event date & time field */}
-        <div>
-          <div className="form-input">
-            <Label htmlFor="date_time">Date and Time</Label>
-            <Input
-              id="date_time"
-              placeholder="Event date and time"
-              {...register("date_time")}
-            />
-          </div>
-          {errors.date_time && <FieldErrorMessage errorMessage={errors.date_time.message} />}
-        </div>
-        {/* <Input placeholder="Date & time" /> */}
-      </div>
-
-      <div className="flex gap-2.5 justify-end">
-        <Button
-          variant="secondary"
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(`/dashboard/${routes.dashboard.events.index}`);
-          }}
-        >
-          Cancel
-        </Button>
-        <Button type="submit">
-          Add event
-          <span className="sr-only"> Add event</span>
-        </Button>
-      </div>
-    </form>
+      </form>
+    </Form>
   );
 }
