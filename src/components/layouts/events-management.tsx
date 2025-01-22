@@ -7,9 +7,21 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { routes } from "@/lib/routes";
-import { Outlet } from "react-router";
+import { useEffect, useState } from "react";
+import { Outlet, useLocation } from "react-router";
 
 export default function EventsManagementLayout() {
+  const location = useLocation();
+  const [isAddTicketPath, setisAddTicketPath] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname.includes(routes.dashboard.events.addTickets)) {
+      setisAddTicketPath(true);
+    } else {
+      setisAddTicketPath(false);
+    }
+  }, [location.pathname]);
+
   return (
     <div className="flex flex-col gap-y-5 items-start">
       <Breadcrumb>
@@ -18,13 +30,21 @@ export default function EventsManagementLayout() {
             <BreadcrumbLink href={`/dashboard/${routes.dashboard.events.index}`}>Events</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
-          {/* <BreadcrumbItem>
-            <BreadcrumbLink href="/components">Components</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator /> */}
           <BreadcrumbItem>
-            <BreadcrumbPage>Add event</BreadcrumbPage>
+            {isAddTicketPath ? (
+              <BreadcrumbLink href={`/dashboard/events/${routes.dashboard.events.addEvent}`}>Add event</BreadcrumbLink>
+            ) : (
+              <BreadcrumbPage>Add event</BreadcrumbPage>
+            )}
           </BreadcrumbItem>
+          {isAddTicketPath && (
+            <>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Add tickets</BreadcrumbPage>
+              </BreadcrumbItem>
+            </>
+          )}
         </BreadcrumbList>
       </Breadcrumb>
 
