@@ -60,7 +60,7 @@ export default function Imageupload({ maxSize, disabled, accept, onUpload, ...pr
           <input
             ref={fileInputRef}
             type="file"
-            className="hidden"
+            style={{ display: "none" }}
             onChange={handleImageUpload}
             accept={accept}
             size={maxSize}

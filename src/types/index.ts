@@ -31,14 +31,17 @@ export interface Event {
 }
 
 // --------------------- TICKETS TYPES --------------------- //
+export interface TicketType {
+  id: string;
+  name: string;
+}
 export interface Ticket {
   id: string;
   name: string;
   quantity: string;
-  price: string;
-  event_id: string;
-  user_id: string;
-  ticket_type_id: string;
+  price: number;
+  event: Event;
+  ticket_type: TicketType;
 }
 
 // --------------------- ORDERS TYPES --------------------- //
@@ -48,4 +51,10 @@ export interface Order {
   user_id: string;
   is_canceled: boolean;
   is_expired: boolean;
+}
+
+// --------------------- CATEGORIES TYPES --------------------- //
+export interface Category {
+  id: string;
+  name: string;
 }

@@ -6,28 +6,16 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { routes } from "@/lib/routes";
 import { CreateAndUpdateEvent, createAndUpdateEventSchema } from "@/lib/schemas/events";
+import { useCategories } from "@/services/categories/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-
-const categories = [
-  {
-    id: "1",
-    name: "Music",
-  },
-  {
-    id: "2",
-    name: "Sports",
-  },
-  {
-    id: "3",
-    name: "Arts",
-  },
-];
+import { Skeleton } from "../ui/skeleton";
 
 export default function AddEditEventForm() {
   const navigate = useNavigate();
+  const { data: categoriesList, isLoading, isSuccess } = useCategories();
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -105,16 +93,28 @@ export default function AddEditEventForm() {
                 <FormLabel>Choose categories</FormLabel>
                 <FormControl>
                   <div className="flex flex-wrap gap-2">
-                    {categories.map((category) => (
-                      <Badge
-                        variant={selectedCategories.includes(category.id) ? "default" : "secondary"}
-                        key={category.id}
-                        className="cursor-pointer"
-                        onClick={() => handleAddToSelectedCategories(category.id)}
-                      >
-                        {category.name}
-                      </Badge>
-                    ))}
+                    {isLoading ? (
+                      <>
+                        {Array.from({ length: 6 }).map((_, index) => (
+                          <Skeleton
+                            key={index}
+                            className="w-20 h-8 rounded-full"
+                          />
+                        ))}
+                      </>
+                    ) : (
+                      isSuccess &&
+                      categoriesList.map((category) => (
+                        <Badge
+                          variant={selectedCategories.includes(category.id) ? "default" : "secondary"}
+                          key={category.id}
+                          className="cursor-pointer"
+                          onClick={() => handleAddToSelectedCategories(category.id)}
+                        >
+                          {category.name}
+                        </Badge>
+                      ))
+                    )}
                   </div>
                 </FormControl>
                 <FormMessage />
