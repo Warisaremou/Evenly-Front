@@ -3,22 +3,17 @@ import { ReactNode } from "react";
 
 type Props = {
   title: string;
-  description: string;
   children: ReactNode;
 };
 
-export default function SharedFormCard({ title, description, children }: Props) {
+export default function SharedFormCard({ title, children }: Props) {
   return (
-    <div className="flex w-full max-w-lg flex-col gap-y-3 rounded-2xl border border-slate-200 bg-background p-4">
-      <div className="flex flex-col items-center gap-y-5">
-        <Logo />
-        <div className="text-center">
-          <h1 className="text-2xl font-body-semibold">{title}</h1>
-          <p className="font-body-medium text-muted-foreground">{description}</p>
-        </div>
+    <div className="flex w-full items-center max-w-[29.5rem] flex-col gap-y-12 max-lg:p-4">
+      <Logo />
+      <div className="flex flex-col items-center gap-y-5 w-full">
+        <h1 className="heading2 font-heading-bold">{title}</h1>
+        <div className="w-full">{children}</div>
       </div>
-
-      <div>{children}</div>
     </div>
   );
 }

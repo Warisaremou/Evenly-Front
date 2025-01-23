@@ -74,6 +74,10 @@
     @apply text-4xl;
   }
 
+  .heading2 {
+    @apply text-3xl;
+  }
+
   .section-header-title {
     @apply font-heading-semibold text-2xl text-grey-500;
   }
