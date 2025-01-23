@@ -42,5 +42,21 @@
       "id": "1b72d120-830c-41e7-9db3-a58b58571e05",
       "name": "Paid"
     }
+  ],
+  "tickets": [
+    {
+      "id": "5f7daf22-3496-4cd0-80e6-fef3e0d21029",
+      "name": "Simple",
+      "quantity": 100,
+      "price": 0,
+      "ticket_type": {
+        "id": "08c6b9c8-52db-47e2-a501-2b72b44880fa",
+        "name": "Free"
+      },
+      "event": {
+        "id": "0bc28b54-05b7-497f-b233-e6ceb6aa9441",
+        "name": "Madonna Hackathon"
+      }
+    }
   ]
 }
