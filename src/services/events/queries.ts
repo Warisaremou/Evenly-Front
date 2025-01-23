@@ -28,7 +28,7 @@ export const getEventById = async (id: string): Promise<Event> => {
  * @returns Promise<Event[]> - List of events
  */
 export const getOrganizerEvents = async (): Promise<Event[]> => {
-  const response = await api.get("/events/organizer").then((res) => res);
+  const response = await api.get("/events").then((res) => res);
   return response.data;
 };
 
