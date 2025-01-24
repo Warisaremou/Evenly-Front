@@ -19,15 +19,38 @@ const CONFIRM_PASSWORD_VALIDATION = z.string().min(8, {
 
 export const registerSchema = z
   .object({
+    id_role: z
+      .string({
+        message: "Please select a role",
+      })
+      .min(1, {
+        message: "Role is required",
+      }),
     email: EMAIL_VALIDATION,
+    organizer_name: z
+      .string({
+        message: "Organizer name is required",
+      })
+      .min(3, {
+        message: "Organizer name must have at least 3 characters",
+      }),
+    firstname: z
+      .string({
+        message: "firstname is required",
+      })
+      .min(3, {
+        message: "firstname must have at least 3 characters",
+      }),
+    lastname: z
+      .string({
+        message: "lastname is required",
+      })
+      .min(3, {
+        message: "lastname must have at least 3 characters",
+      }),
     password: PASSWORD_VALIDATION,
-    confirmPassword: CONFIRM_PASSWORD_VALIDATION,
   })
-  .required()
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+  .required();
 
 export const loginSchema = z.object({
   email: EMAIL_VALIDATION,

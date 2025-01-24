@@ -1,4 +1,14 @@
 {
+  "roles": [
+    {
+      "id": "a41b3b89-a6cc-4928-9e3a-c2d8ff22ee3a",
+      "name": "user"
+    },
+    {
+      "id": "98be1cbb-6e20-492f-8e77-744190d0b878",
+      "name": "organizer"
+    }
+  ],
   "categories": [
     { "id": "0108f394-9a75-4033-804e-0f4ab1fede17", "name": "Chill" },
     { "id": "073350d1-1ab4-47c8-95e2-558fcc3884fe", "name": "Festival" },

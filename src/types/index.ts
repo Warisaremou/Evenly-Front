@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface NavItem {
   title: string;
   href: string;
@@ -16,8 +18,33 @@ export interface NavItemWithOptionalChildren extends NavItem {
 export type MainNavItem = NavItemWithOptionalChildren;
 
 // --------------------- API RESPONSE TYPES --------------------- //
+export interface AuthContextType {
+  isAuthenticated: boolean;
+  setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
+  isLoading: boolean;
+  userData: User | null;
+}
+
+// --------------------- API RESPONSE TYPES --------------------- //
 export interface ApiResponse {
   message: string;
+  data: Ticket | Event | Order | User;
+}
+
+// --------------------- USER TYPES --------------------- //
+export interface User {
+  id: string;
+  email: string;
+  firstname: string;
+  surname: string;
+  organizer_name: string;
+  role: Role;
+}
+
+// --------------------- ROLE TYPES --------------------- //
+export interface Role {
+  id: string;
+  name: "admin" | "organizer" | "user";
 }
 
 // --------------------- EVENTS TYPES --------------------- //

@@ -28,7 +28,7 @@ export default function LoginForm() {
         className="flex flex-col gap-y-5"
       >
         <div className="space-y-5">
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             {/* Email field */}
             <FormField
               control={form.control}

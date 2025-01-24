@@ -1,5 +1,5 @@
 import Loader from "@/components/loader";
-import { AuthContext } from "@/contexts/auth/context";
+import { AuthContext } from "@/context/auth/context";
 import { useLocalStorage } from "@/hooks/use-localstorage";
 import { useProfile } from "@/services/auth/hooks";
 import { User } from "@/types";
