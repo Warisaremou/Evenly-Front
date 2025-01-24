@@ -8,6 +8,7 @@ import { DashboardOrders, DashboardProfile, DashboardTickets } from "@/pages/das
 import { DashboardAddEvent, DashboardAddTickets, DashboardEditEvent, DashboardEvents } from "@/pages/dashboard/events";
 import { Event, Events } from "@/pages/events";
 import { Route, BrowserRouter as Router, Routes } from "react-router";
+import { Toaster } from "sonner";
 
 export default function App() {
   return (
@@ -113,6 +114,12 @@ export default function App() {
           />
         </Routes>
       </Router>
+      <Toaster
+        richColors
+        toastOptions={{
+          className: "p-4",
+        }}
+      />
     </QueryProvider>
   );
 }

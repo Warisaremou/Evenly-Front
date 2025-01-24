@@ -1,5 +1,7 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useCategories } from "@/services/categories/hooks";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 type Props = {
   className?: string;
@@ -7,7 +9,13 @@ type Props = {
 };
 
 export default function CategoriesSelection({ className }: Props) {
-  const { data, isLoading, isSuccess } = useCategories();
+  const { data, isLoading, isSuccess, isError } = useCategories();
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("Failed to fetch categories");
+    }
+  }, [isError]);
 
   return (
     <Select>

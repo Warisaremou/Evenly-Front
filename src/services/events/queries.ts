@@ -38,7 +38,7 @@ export const getOrganizerEvents = async (): Promise<Event[]> => {
  * @param {Event} event - Event data
  * @returns Promise<ApiResponse> - Api response
  */
-export const addEvent = async (event: Event): Promise<ApiResponse> => {
+export const addEvent = async (event: Omit<Event, "id">): Promise<ApiResponse> => {
   const response = await api.post("/events", event).then((res) => res);
   return response.data;
 };

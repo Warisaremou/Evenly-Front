@@ -10,10 +10,22 @@
     }
   ],
   "categories": [
-    { "id": "0108f394-9a75-4033-804e-0f4ab1fede17", "name": "Chill" },
-    { "id": "073350d1-1ab4-47c8-95e2-558fcc3884fe", "name": "Festival" },
-    { "id": "f5e62251-2ea4-45b2-a19d-44ea83ed0ba3", "name": "Concert" },
-    { "id": "679e5727-665f-40fd-9349-192f81572bac", "name": "Hackathon" }
+    {
+      "id": "0108f394-9a75-4033-804e-0f4ab1fede17",
+      "name": "Chill"
+    },
+    {
+      "id": "073350d1-1ab4-47c8-95e2-558fcc3884fe",
+      "name": "Festival"
+    },
+    {
+      "id": "f5e62251-2ea4-45b2-a19d-44ea83ed0ba3",
+      "name": "Concert"
+    },
+    {
+      "id": "679e5727-665f-40fd-9349-192f81572bac",
+      "name": "Hackathon"
+    }
   ],
   "events": [
     {
@@ -31,16 +43,50 @@
       "description": "Show your skills and win a lot of prizes in the Madonna Hackathon event in Paris 75.",
       "date_time": "10/10/2024 at 12:50PM",
       "location": "Paris 75"
+    },
+    {
+      "id": "7dce",
+      "cover": "blob:http://localhost:5173/53c6fe27-b89a-4722-8b4f-9343fff99226",
+      "date_time": "21-Jan-2003",
+      "description": "Est distinctio Nisi",
+      "location": "Impedit consequatur",
+      "title": "Tempor voluptates qu"
+    },
+    {
+      "id": "6851",
+      "cover": "blob:http://localhost:5173/095b254e-68a2-4430-bf9e-a3aa29730bc4",
+      "date_time": "08-Sep-2002",
+      "description": "Vitae cupiditate ess",
+      "location": "Dolores est aut ex o",
+      "title": "Ipsum ut consectetur"
+    },
+    {
+      "id": "dfd1",
+      "cover": "blob:http://localhost:5173/1689813d-cdd8-45e3-91a0-7203f3e426d4",
+      "date_time": "10-Jan-2023",
+      "description": "Commodo ut ipsa tem",
+      "location": "Fugiat tenetur anim",
+      "title": "Quidem qui sit ea la"
+    },
+    {
+      "id": "b630",
+      "cover": "blob:http://localhost:5173/e52c40d8-97d3-44b4-8ece-96368300eef8",
+      "date_time": "02-Sep-2015",
+      "description": "Nostrum ipsam ab non",
+      "location": "Excepteur qui vel el",
+      "title": "Quasi laboriosam vo"
     }
   ],
   "event_category": [
     {
       "event_id": "23cf10b5-0ec5-4657-b308-fcc8a433dae6",
-      "category_id": "0108f394-9a75-4033-804e-0f4ab1fede17"
+      "category_id": "0108f394-9a75-4033-804e-0f4ab1fede17",
+      "id": "df8b"
     },
     {
       "event_id": "23cf10b5-0ec5-4657-b308-fcc8a433dae6",
-      "category_id": "f5e62251-2ea4-45b2-a19d-44ea83ed0ba3"
+      "category_id": "f5e62251-2ea4-45b2-a19d-44ea83ed0ba3",
+      "id": "79ed"
     }
   ],
   "ticket_types": [

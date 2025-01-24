@@ -7,15 +7,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { routes } from "@/lib/routes";
 import { CreateAndUpdateEvent, createAndUpdateEventSchema } from "@/lib/schemas/events";
 import { useCategories } from "@/services/categories/hooks";
+import { useAddEvent } from "@/services/events/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
+import Loader from "../loader";
 import { Skeleton } from "../ui/skeleton";
 
 export default function AddEditEventForm() {
   const navigate = useNavigate();
   const { data: categoriesList, isLoading, isSuccess } = useCategories();
+  const { mutateAsync, isPending } = useAddEvent();
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -41,19 +45,39 @@ export default function AddEditEventForm() {
   };
 
   useEffect(() => {
-    form.reset({
-      categories: selectedCategories,
-    });
+    form.setValue("categories", selectedCategories);
   }, [selectedCategories, form]);
 
-  const onSubmit = (data: CreateAndUpdateEvent) => {
+  const onSubmit = async (data: CreateAndUpdateEvent) => {
     if (data.cover == null) {
       return form.setError("cover", {
         type: "manual",
         message: "Please upload an image",
       });
     }
-    console.log(data);
+
+    await mutateAsync(
+      {
+        cover: URL.createObjectURL(data.cover),
+        date_time: data.date_time,
+        description: data.description,
+        location: data.location,
+        title: data.title,
+      },
+      {
+        onSuccess: (response) => {
+          toast.success(response.message ?? "Event added successfully");
+          setTimeout(() => {
+            navigate(`/dashboard/events/${routes.dashboard.events.addTickets}`);
+          }, 1000);
+        },
+        onError: () => {
+          // console.log(error);
+          // toast.error(error.message);
+          toast.error("Failed to add event");
+        },
+      },
+    );
   };
 
   return (
@@ -85,26 +109,26 @@ export default function AddEditEventForm() {
           />
 
           {/* Categories field */}
-          <FormField
-            control={form.control}
-            name="categories"
-            render={() => (
-              <FormItem>
-                <FormLabel>Choose categories</FormLabel>
-                <FormControl>
-                  <div className="flex flex-wrap gap-2">
-                    {isLoading ? (
-                      <>
-                        {Array.from({ length: 6 }).map((_, index) => (
-                          <Skeleton
-                            key={index}
-                            className="w-20 h-8 rounded-full"
-                          />
-                        ))}
-                      </>
-                    ) : (
-                      isSuccess &&
-                      categoriesList.map((category) => (
+
+          {isLoading ? (
+            <div className="flex flex-wrap gap-2">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <Skeleton
+                  key={index}
+                  className="w-20 h-8 rounded-full"
+                />
+              ))}
+            </div>
+          ) : isSuccess ? (
+            <FormField
+              control={form.control}
+              name="categories"
+              render={() => (
+                <FormItem>
+                  <FormLabel>Choose categories</FormLabel>
+                  <FormControl className="flex flex-wrap">
+                    <div className="flex flex-wrap gap-2">
+                      {categoriesList.map((category) => (
                         <Badge
                           variant={selectedCategories.includes(category.id) ? "default" : "secondary"}
                           key={category.id}
@@ -113,14 +137,14 @@ export default function AddEditEventForm() {
                         >
                           {category.name}
                         </Badge>
-                      ))
-                    )}
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                      ))}
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ) : null}
 
           {/* Event title field */}
           <FormField
@@ -200,6 +224,7 @@ export default function AddEditEventForm() {
 
         <div className="flex gap-2.5 justify-end">
           <Button
+            disabled={isPending}
             variant="secondary"
             onClick={(e) => {
               e.preventDefault();
@@ -208,7 +233,11 @@ export default function AddEditEventForm() {
           >
             Cancel
           </Button>
-          <Button type="submit">
+          <Button
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending && <Loader className="text-grey-100" />}
             Add event
             <span className="sr-only"> Add event</span>
           </Button>

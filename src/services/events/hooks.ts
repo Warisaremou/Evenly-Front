@@ -26,9 +26,9 @@ export const useOrganizerEvents = () => {
 };
 
 // ------------ MUTATIONS HOOKS ------------ //
-export const useAddEvent = (credentials: Event) => {
+export const useAddEvent = () => {
   return useMutation({
     mutationKey: eventsKeys.addEvent,
-    mutationFn: () => addEvent(credentials),
+    mutationFn: (credentials: Omit<Event, "id">) => addEvent(credentials),
   });
 };
