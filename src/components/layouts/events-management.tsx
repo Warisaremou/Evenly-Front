@@ -15,7 +15,7 @@ export default function EventsManagementLayout() {
   const [isAddTicketPath, setisAddTicketPath] = useState(false);
 
   useEffect(() => {
-    if (location.pathname.includes(routes.dashboard.events.addTickets)) {
+    if (location.pathname.includes("add-tickets")) {
       setisAddTicketPath(true);
     } else {
       setisAddTicketPath(false);

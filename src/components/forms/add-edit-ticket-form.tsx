@@ -4,8 +4,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CreateAndUpdateTicket, createAndUpdateTicketSchema } from "@/lib/schemas/tickets";
-import { useAddTicket } from "@/services/tickets/hooks";
+import { useAddTicket, useTicketTypes } from "@/services/tickets/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -16,6 +17,13 @@ type Props = {
 
 export default function AddEditTicketForm({ id_event, onToogleDialog }: Props) {
   const { mutateAsync, isPending } = useAddTicket();
+  const { isLoading, data, isError } = useTicketTypes();
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("Failed to fetch ticket types");
+    }
+  }, [isError]);
 
   const form = useForm<CreateAndUpdateTicket>({
     resolver: zodResolver(createAndUpdateTicketSchema),
@@ -66,8 +74,19 @@ export default function AddEditTicketForm({ id_event, onToogleDialog }: Props) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="free">Free</SelectItem>
-                    <SelectItem value="paid">Paid</SelectItem>
+                    {isLoading ? (
+                      <p className="py-1.5 pl-8 pr-2 text-sm text-grey-400">Loading ticket types</p>
+                    ) : (
+                      data &&
+                      data.map((ticketType) => (
+                        <SelectItem
+                          key={ticketType.id}
+                          value={ticketType.id}
+                        >
+                          {ticketType.name}
+                        </SelectItem>
+                      ))
+                    )}
                   </SelectContent>
                 </Select>
                 <FormMessage />

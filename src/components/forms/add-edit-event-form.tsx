@@ -111,7 +111,6 @@ export default function AddEditEventForm() {
           />
 
           {/* Categories field */}
-
           {isLoading ? (
             <div className="flex flex-wrap gap-2">
               {Array.from({ length: 6 }).map((_, index) => (

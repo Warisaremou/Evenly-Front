@@ -1,6 +1,6 @@
 import { CreateAndUpdateTicket } from "@/lib/schemas/tickets";
 import { ticketsKeys } from "@/services/tickets/keys";
-import { addTicketToEvent, getEventTickets, getOrganizerTickets } from "@/services/tickets/queries";
+import { addTicketToEvent, getEventTickets, getOrganizerTickets, getTicketTypes } from "@/services/tickets/queries";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 // --------------- QUERIES HOOKS --------------- //
@@ -16,6 +16,13 @@ export const useEventTickets = (id_event: string) => {
     queryKey: ticketsKeys.eventTickets(id_event),
     queryFn: () => getEventTickets(id_event),
     enabled: !!id_event,
+  });
+};
+
+export const useTicketTypes = () => {
+  return useQuery({
+    queryKey: ticketsKeys.ticketTypes,
+    queryFn: () => getTicketTypes(),
   });
 };
 

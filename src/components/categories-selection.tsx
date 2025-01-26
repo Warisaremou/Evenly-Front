@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default function CategoriesSelection({ className }: Props) {
-  const { data, isLoading, isSuccess, isError } = useCategories();
+  const { data, isLoading, isError } = useCategories();
 
   useEffect(() => {
     if (isError) {
@@ -26,7 +26,7 @@ export default function CategoriesSelection({ className }: Props) {
         {isLoading ? (
           <p className="py-1.5 pl-8 pr-2 text-sm text-grey-400">Loading categories</p>
         ) : (
-          isSuccess &&
+          data &&
           data.map((category) => (
             <SelectItem
               key={category.id}
