@@ -8,7 +8,9 @@ import { routes } from "@/lib/routes";
 import { CreateAndUpdateEvent, createAndUpdateEventSchema } from "@/lib/schemas/events";
 import { useCategories } from "@/services/categories/hooks";
 import { useAddEvent } from "@/services/events/hooks";
+import { eventsKeys } from "@/services/events/keys";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
@@ -20,6 +22,7 @@ export default function AddEditEventForm() {
   const navigate = useNavigate();
   const { data: categoriesList, isLoading, isSuccess } = useCategories();
   const { mutateAsync, isPending } = useAddEvent();
+  const queryClient = useQueryClient();
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -68,6 +71,9 @@ export default function AddEditEventForm() {
       {
         onSuccess: (response) => {
           toast.success(response.message ?? "Event added successfully");
+          queryClient.invalidateQueries({
+            queryKey: eventsKeys.organizerEvents,
+          });
           console.log(response.data.id);
           setTimeout(() => {
             // TODO: Redirect to the add tickets page with the event ID sended from the backend

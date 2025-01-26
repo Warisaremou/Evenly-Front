@@ -5,7 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CreateAndUpdateTicket, createAndUpdateTicketSchema } from "@/lib/schemas/tickets";
 import { useAddTicket, useTicketTypes } from "@/services/tickets/hooks";
+import { ticketsKeys } from "@/services/tickets/keys";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -18,6 +20,7 @@ type Props = {
 export default function AddEditTicketForm({ id_event, onToogleDialog }: Props) {
   const { mutateAsync, isPending } = useAddTicket();
   const { isLoading, data, isError } = useTicketTypes();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (isError) {
@@ -40,7 +43,9 @@ export default function AddEditTicketForm({ id_event, onToogleDialog }: Props) {
     mutateAsync(data, {
       onSuccess: (response) => {
         toast.success(response.message ?? "Ticket added successfully");
-        // TODO: Invalidate event tickets query cache
+        queryClient.invalidateQueries({
+          queryKey: ticketsKeys.eventTickets(id_event),
+        });
         onToogleDialog();
       },
       onError: () => {
