@@ -1,0 +1,3 @@
+{
+  "/tickets/event/:id_event": "/tickets?ticket_type.id=:id_event"
+}

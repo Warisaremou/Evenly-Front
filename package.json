@@ -10,7 +10,9 @@
 		"format:check": "prettier --check .",
 		"format": "prettier --write .",
 		"preview": "vite preview",
-		"prepare": "husky"
+		"prepare": "husky",
+		"server": "json-server --watch db.json",
+		"server:routes": "json-server db.json --routes routes.json"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.10.0",
