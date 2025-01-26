@@ -10,7 +10,7 @@ export default function BoardLayout() {
   const isAuth = false;
 
   return (
-    <div className="container flex flex-col min-h-screen w-full gap-y-14">
+    <div className="container flex flex-col min-h-screen w-full gap-10 md:gap-14">
       {/* Navbar */}
       <nav className="flex flex-row items-center justify-between py-4 bg-grey-100">
         <Logo />

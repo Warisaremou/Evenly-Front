@@ -37,7 +37,7 @@ export default function DashboardAddTickets() {
         >
           Open
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className="max-md:max-w-[23.12rem]">
           <DialogHeader>
             <DialogTitle>Add ticket</DialogTitle>
           </DialogHeader>
