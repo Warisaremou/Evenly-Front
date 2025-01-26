@@ -1,5 +1,5 @@
 import Loader from "@/components/loader";
-import { AuthContext } from "@/context/auth/context";
+import { AuthContext } from "@/contexts/auth/context";
 import { useLocalStorage } from "@/hooks/use-localstorage";
 import { useProfile } from "@/services/auth/hooks";
 import { User } from "@/types";
@@ -12,7 +12,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const { getItem } = useLocalStorage();
   const accessToken = getItem("accessToken");
 
-  const { data, isLoading, isSuccess, isError } = useProfile(accessToken ? true : false);
+  const { data, isLoading, isSuccess, isError } = useProfile(!!accessToken);
 
   useEffect(() => {
     if (isSuccess) {

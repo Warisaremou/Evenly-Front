@@ -1,4 +1,5 @@
 import { AccountLayout, AuthLayout, BoardLayout, DashboardLayout, EventsManagementLayout } from "@/components/layouts";
+import EventProvider from "@/contexts/event/provider";
 import QueryProvider from "@/lib/providers/query-client-provider";
 import { routes } from "@/lib/routes";
 import { Home, NotFound } from "@/pages";
@@ -13,113 +14,115 @@ import { Toaster } from "sonner";
 export default function App() {
   return (
     <QueryProvider>
-      <Router>
-        <Routes>
-          {/* Home Routes */}
-          <Route
-            path={routes.index}
-            element={<BoardLayout />}
-          >
+      <EventProvider>
+        <Router>
+          <Routes>
+            {/* Home Routes */}
             <Route
-              index
-              element={<Home />}
-            />
-            {/* Events Routes */}
-            <Route path={routes.events.index}>
-              <Route
-                index
-                element={<Events />}
-              />
-              <Route
-                path={routes.events.eventDetails}
-                element={<Event />}
-              />
-            </Route>
-            {/* Account Routes */}
-            <Route
-              path={routes.account.index}
-              element={<AccountLayout />}
+              path={routes.index}
+              element={<BoardLayout />}
             >
               <Route
-                path={routes.account.profile}
-                element={<AccountProfile />}
-              />
-              <Route
-                path={routes.account.books}
-                element={<AccountBooks />}
-              />
-              <Route
-                path={routes.account.favorites}
-                element={<AccountFavorites />}
-              />
-            </Route>
-          </Route>
-          {/* Authentication Routes */}
-          <Route element={<AuthLayout />}>
-            <Route
-              path={routes.auth.login}
-              element={<Login />}
-            />
-            <Route
-              path={routes.auth.register}
-              element={<Register />}
-            />
-          </Route>
-          {/* Dashboard Routes */}
-          <Route
-            path={routes.dashboard.index}
-            element={<DashboardLayout />}
-          >
-            {/* Dashboard Events Routes */}
-            <Route path={routes.dashboard.events.index}>
-              <Route
                 index
-                element={<DashboardEvents />}
+                element={<Home />}
               />
-              <Route element={<EventsManagementLayout />}>
+              {/* Events Routes */}
+              <Route path={routes.events.index}>
                 <Route
-                  path={routes.dashboard.events.addEvent}
-                  element={<DashboardAddEvent />}
+                  index
+                  element={<Events />}
                 />
                 <Route
-                  path={routes.dashboard.events.editEvent}
-                  element={<DashboardEditEvent />}
+                  path={routes.events.eventDetails}
+                  element={<Event />}
+                />
+              </Route>
+              {/* Account Routes */}
+              <Route
+                path={routes.account.index}
+                element={<AccountLayout />}
+              >
+                <Route
+                  path={routes.account.profile}
+                  element={<AccountProfile />}
                 />
                 <Route
-                  path={routes.dashboard.events.addTickets}
-                  element={<DashboardAddTickets />}
+                  path={routes.account.books}
+                  element={<AccountBooks />}
+                />
+                <Route
+                  path={routes.account.favorites}
+                  element={<AccountFavorites />}
                 />
               </Route>
             </Route>
-            {/* Dashboard Tickets Routes */}
+            {/* Authentication Routes */}
+            <Route element={<AuthLayout />}>
+              <Route
+                path={routes.auth.login}
+                element={<Login />}
+              />
+              <Route
+                path={routes.auth.register}
+                element={<Register />}
+              />
+            </Route>
+            {/* Dashboard Routes */}
             <Route
-              path={routes.dashboard.tickets.index}
-              element={<DashboardTickets />}
-            />
-            {/* Dashboard Orders Routes */}
-            <Route
-              path={routes.dashboard.orders.index}
-              element={<DashboardOrders />}
-            />
-            {/* Dashboard Profile Routes */}
-            <Route
-              path={routes.dashboard.profile.index}
-              element={<DashboardProfile />}
-            />
-          </Route>
+              path={routes.dashboard.index}
+              element={<DashboardLayout />}
+            >
+              {/* Dashboard Events Routes */}
+              <Route path={routes.dashboard.events.index}>
+                <Route
+                  index
+                  element={<DashboardEvents />}
+                />
+                <Route element={<EventsManagementLayout />}>
+                  <Route
+                    path={routes.dashboard.events.addEvent}
+                    element={<DashboardAddEvent />}
+                  />
+                  <Route
+                    path={routes.dashboard.events.editEvent}
+                    element={<DashboardEditEvent />}
+                  />
+                  <Route
+                    path={routes.dashboard.events.addTickets}
+                    element={<DashboardAddTickets />}
+                  />
+                </Route>
+              </Route>
+              {/* Dashboard Tickets Routes */}
+              <Route
+                path={routes.dashboard.tickets.index}
+                element={<DashboardTickets />}
+              />
+              {/* Dashboard Orders Routes */}
+              <Route
+                path={routes.dashboard.orders.index}
+                element={<DashboardOrders />}
+              />
+              {/* Dashboard Profile Routes */}
+              <Route
+                path={routes.dashboard.profile.index}
+                element={<DashboardProfile />}
+              />
+            </Route>
 
-          <Route
-            path="*"
-            element={<NotFound />}
-          />
-        </Routes>
-      </Router>
-      <Toaster
-        richColors
-        toastOptions={{
-          className: "p-4",
-        }}
-      />
+            <Route
+              path="*"
+              element={<NotFound />}
+            />
+          </Routes>
+        </Router>
+        <Toaster
+          richColors
+          toastOptions={{
+            className: "p-4",
+          }}
+        />
+      </EventProvider>
     </QueryProvider>
   );
 }

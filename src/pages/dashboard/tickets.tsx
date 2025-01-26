@@ -5,11 +5,18 @@ import { ticketsColumns } from "@/components/tables/tickets/columns";
 import { DataTable } from "@/components/ui/data-table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useOrganizerTickets } from "@/services/tickets/hooks";
-import { Ticket } from "@/types";
 import { Inbox } from "lucide-react";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function DashboardTickets() {
-  const { data: ticketsList, isLoading, isSuccess } = useOrganizerTickets();
+  const { data, isLoading, isError } = useOrganizerTickets();
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("Failed to fetch tickets");
+    }
+  }, [isError]);
 
   return (
     <div className="space-y-5">
@@ -36,16 +43,20 @@ export default function DashboardTickets() {
           <div className="flex justify-center items-center py-10">
             <Loader className="size-5" />
           </div>
-        ) : isSuccess && ticketsList.length <= 0 ? (
-          <NoDataFoundCard
-            Icon={<Inbox />}
-            message="No Ticket found or Added"
-          />
         ) : (
-          <DataTable
-            columns={ticketsColumns}
-            data={ticketsList as Ticket[]}
-          />
+          <>
+            {data && data.length > 0 ? (
+              <DataTable
+                columns={ticketsColumns}
+                data={data}
+              />
+            ) : (
+              <NoDataFoundCard
+                Icon={<Inbox />}
+                message="No Ticket found or Added"
+              />
+            )}
+          </>
         )}
       </div>
     </div>

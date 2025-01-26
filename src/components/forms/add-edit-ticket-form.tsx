@@ -1,29 +1,45 @@
+import Loader from "@/components/loader";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CreateAndUpdateTicket, createAndUpdateTicketSchema } from "@/lib/schemas/tickets";
+import { useAddTicket } from "@/services/tickets/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 type Props = {
+  id_event: string;
   onToogleDialog: () => void;
 };
 
-export default function AddEditTicketForm({ onToogleDialog }: Props) {
+export default function AddEditTicketForm({ id_event, onToogleDialog }: Props) {
+  const { mutateAsync, isPending } = useAddTicket();
+
   const form = useForm<CreateAndUpdateTicket>({
     resolver: zodResolver(createAndUpdateTicketSchema),
     defaultValues: {
       name: "",
       quantity: 0,
       price: 0,
-      event_id: "",
+      event_id: id_event,
       ticket_type_id: "",
     },
   });
 
   const onSubmit = (data: CreateAndUpdateTicket) => {
-    console.log(data);
+    mutateAsync(data, {
+      onSuccess: (response) => {
+        toast.success(response.message ?? "Ticket added successfully");
+        // TODO: Invalidate event tickets query cache
+        onToogleDialog();
+      },
+      onError: () => {
+        // toast.error(error.message);
+        toast.error("Failed to add ticket");
+      },
+    });
   };
 
   return (
@@ -119,6 +135,7 @@ export default function AddEditTicketForm({ onToogleDialog }: Props) {
 
         <div className="flex gap-2.5 justify-end">
           <Button
+            disabled={isPending}
             variant="secondary"
             onClick={(e) => {
               onToogleDialog();
@@ -128,7 +145,11 @@ export default function AddEditTicketForm({ onToogleDialog }: Props) {
           >
             Cancel
           </Button>
-          <Button type="submit">
+          <Button
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending && <Loader />}
             Add ticket
             <span className="sr-only"> Add ticket</span>
           </Button>

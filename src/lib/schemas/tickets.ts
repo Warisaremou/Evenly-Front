@@ -9,8 +9,8 @@ export const createAndUpdateTicketSchema = z
       .min(3, {
         message: "Ticket name must have at least 3 characters",
       })
-      .max(10, {
-        message: "Ticket name must have at most 10 characters",
+      .max(15, {
+        message: "Ticket name must have at most 15 characters",
       })
       .trim(),
     quantity: z.preprocess(

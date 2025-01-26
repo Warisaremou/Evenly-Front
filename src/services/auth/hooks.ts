@@ -13,16 +13,16 @@ export const useProfile = (token: boolean) => {
 };
 
 // ------------ MUTATIONS HOOKS ------------ //
-export const useRegister = (credentials: Register) => {
+export const useRegister = () => {
   return useMutation({
     mutationKey: authKeys.register,
-    mutationFn: () => register(credentials),
+    mutationFn: (credentials: Register) => register(credentials),
   });
 };
 
-export const useLogin = (credentials: Login) => {
+export const useLogin = () => {
   return useMutation({
     mutationKey: authKeys.login,
-    mutationFn: () => login(credentials),
+    mutationFn: (credentials: Login) => login(credentials),
   });
 };

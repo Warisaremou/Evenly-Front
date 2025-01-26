@@ -17,12 +17,17 @@ export interface NavItemWithOptionalChildren extends NavItem {
 
 export type MainNavItem = NavItemWithOptionalChildren;
 
-// --------------------- API RESPONSE TYPES --------------------- //
+// --------------------- CONTEXTS TYPES --------------------- //
 export interface AuthContextType {
   isAuthenticated: boolean;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
   userData: User | null;
+}
+
+export interface EventContextType {
+  eventID: string;
+  setEventID: Dispatch<SetStateAction<string>>;
 }
 
 // --------------------- API RESPONSE TYPES --------------------- //

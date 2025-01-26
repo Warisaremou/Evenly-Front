@@ -7,12 +7,19 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { routes } from "@/lib/routes";
 import { useOrganizerEvents } from "@/services/events/hooks";
-import { Event } from "@/types";
 import { Inbox } from "lucide-react";
+import { useEffect } from "react";
 import { Link } from "react-router";
+import { toast } from "sonner";
 
 export default function DashboardEvents() {
-  const { data: eventsList, isLoading, isSuccess } = useOrganizerEvents();
+  const { data, isLoading, isError } = useOrganizerEvents();
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("Failed to fetch events");
+    }
+  }, [isError]);
 
   return (
     <div className="space-y-5">
@@ -36,21 +43,25 @@ export default function DashboardEvents() {
           <div className="flex justify-center items-center py-10">
             <Loader className="size-5" />
           </div>
-        ) : isSuccess && eventsList.length <= 0 ? (
-          <NoDataFoundCard
-            Icon={<Inbox />}
-            message="No event found"
-            cta={
-              <Button asChild>
-                <Link to={routes.dashboard.events.addEvent}>Add new event</Link>
-              </Button>
-            }
-          />
         ) : (
-          <DataTable
-            columns={eventsColumns}
-            data={eventsList as Event[]}
-          />
+          <>
+            {data && data.length > 0 ? (
+              <DataTable
+                columns={eventsColumns}
+                data={data}
+              />
+            ) : (
+              <NoDataFoundCard
+                Icon={<Inbox />}
+                message="No event found"
+                cta={
+                  <Button asChild>
+                    <Link to={routes.dashboard.events.addEvent}>Add new event</Link>
+                  </Button>
+                }
+              />
+            )}
+          </>
         )}
       </div>
     </div>

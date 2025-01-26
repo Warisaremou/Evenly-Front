@@ -58,6 +58,7 @@ export default function AddEditEventForm() {
 
     await mutateAsync(
       {
+        // ? Send the image as a file while connecting to the backend
         cover: URL.createObjectURL(data.cover),
         date_time: data.date_time,
         description: data.description,
@@ -67,12 +68,13 @@ export default function AddEditEventForm() {
       {
         onSuccess: (response) => {
           toast.success(response.message ?? "Event added successfully");
+          console.log(response.data.id);
           setTimeout(() => {
-            navigate(`/dashboard/events/${routes.dashboard.events.addTickets}`);
+            // TODO: Redirect to the add tickets page with the event ID sended from the backend
+            navigate(`/dashboard/events/qsdsdqsdqsd/add-tickets`);
           }, 1000);
         },
         onError: () => {
-          // console.log(error);
           // toast.error(error.message);
           toast.error("Failed to add event");
         },
@@ -119,32 +121,34 @@ export default function AddEditEventForm() {
                 />
               ))}
             </div>
-          ) : isSuccess ? (
-            <FormField
-              control={form.control}
-              name="categories"
-              render={() => (
-                <FormItem>
-                  <FormLabel>Choose categories</FormLabel>
-                  <FormControl className="flex flex-wrap">
-                    <div className="flex flex-wrap gap-2">
-                      {categoriesList.map((category) => (
-                        <Badge
-                          variant={selectedCategories.includes(category.id) ? "default" : "secondary"}
-                          key={category.id}
-                          className="cursor-pointer"
-                          onClick={() => handleAddToSelectedCategories(category.id)}
-                        >
-                          {category.name}
-                        </Badge>
-                      ))}
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ) : null}
+          ) : (
+            isSuccess && (
+              <FormField
+                control={form.control}
+                name="categories"
+                render={() => (
+                  <FormItem>
+                    <FormLabel>Choose categories</FormLabel>
+                    <FormControl className="flex flex-wrap">
+                      <div className="flex flex-wrap gap-2">
+                        {categoriesList.map((category) => (
+                          <Badge
+                            variant={selectedCategories.includes(category.id) ? "default" : "secondary"}
+                            key={category.id}
+                            className="cursor-pointer"
+                            onClick={() => handleAddToSelectedCategories(category.id)}
+                          >
+                            {category.name}
+                          </Badge>
+                        ))}
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )
+          )}
 
           {/* Event title field */}
           <FormField
