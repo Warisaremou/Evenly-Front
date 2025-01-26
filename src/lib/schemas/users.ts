@@ -5,7 +5,7 @@ export const updateOrganizerProfileSchema = z
     email: z.string().email({
       message: "Enter a valid email",
     }),
-    name: z
+    organizer_name: z
       .string({
         required_error: "Organization name is required",
       })

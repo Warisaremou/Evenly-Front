@@ -104,5 +104,11 @@
         "name": "Ea sed sed eiusmod s"
       }
     }
-  ]
+  ],
+  "auth": {
+    "me": {
+      "email": "user-org@gmail.com",
+      "organizer_name": "Empire Group"
+    }
+  }
 }

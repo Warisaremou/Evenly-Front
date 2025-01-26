@@ -1,6 +1,8 @@
 import { Login, Register } from "@/lib/schemas/auth";
+import { OrganizerProfile } from "@/lib/schemas/users";
 import { authKeys } from "@/services/auth/keys";
-import { getUserProfile, login, register } from "@/services/auth/queries";
+import { getUserProfile, login, register, updateProfile } from "@/services/auth/queries";
+import { User } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 // --------------- QUERIES HOOKS --------------- //
@@ -24,5 +26,13 @@ export const useLogin = () => {
   return useMutation({
     mutationKey: authKeys.login,
     mutationFn: (credentials: Login) => login(credentials),
+  });
+};
+
+export const useUpdateProfile = () => {
+  return useMutation({
+    mutationKey: authKeys.updateProfile,
+    mutationFn: (credentials: Pick<User, "email" | "firstname" | "surname"> | OrganizerProfile) =>
+      updateProfile(credentials),
   });
 };
