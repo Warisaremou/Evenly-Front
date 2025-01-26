@@ -7,7 +7,7 @@ import { routes } from "@/lib/routes";
 import { Link, Outlet } from "react-router";
 
 export default function BoardLayout() {
-  const isAuth = false;
+  const isAuth = true;
 
   return (
     <div className="container flex flex-col min-h-screen w-full gap-10 md:gap-14">

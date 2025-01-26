@@ -74,6 +74,9 @@ export default {
       backgroundImage: {
         "hero-background": "url('src/assets/images/hero-bg.avif')",
       },
+      boxShadow: {
+        "3xl": "4px 4px 4px 0px rgba(195, 195, 195, 0.25)",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

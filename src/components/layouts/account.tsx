@@ -6,7 +6,7 @@ export default function AccountLayout() {
   return (
     <div className="flex max-lg:flex-col lg:items-start gap-5">
       {/* Sidebar */}
-      <ul className="max-lg:flex-wrap lg:pr-2.5 lg:max-w-64 w-full flex lg:flex-col max-lg:border-b lg:border-r border-grey-200 gap-2">
+      <ul className="max-md:gap-0.5 max-md:[&>a]:px-3 max-md:[&>a]:w-full max-lg:pb-2.5 lg:pr-2.5 lg:max-w-64 w-full flex lg:flex-col max-lg:border-b lg:border-r border-grey-200 gap-2">
         {siteConfig.accountNav.map((item, index) => (
           <CustomSidebarLink
             item={item}
