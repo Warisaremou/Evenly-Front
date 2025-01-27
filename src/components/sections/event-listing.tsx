@@ -16,12 +16,17 @@ export default function EventListing() {
   }, [isError]);
   return (
     <div className="space-y-6">
-      <div>
-        <h3>Upmcoming events</h3>
-        <Link to={routes.events.index}>View more</Link>
+      <div className="flex items-center justify-between">
+        <h3 className="heading3">Upoming events</h3>
+        <Link
+          className="text-xs font-body-medium"
+          to={routes.events.index}
+        >
+          View more
+        </Link>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {isLoading ? (
           <Loader />
         ) : (
