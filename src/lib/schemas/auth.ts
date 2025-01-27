@@ -1,8 +1,9 @@
 import { z } from "zod";
 
-const EMAIL_VALIDATION = z.string().email({
+export const EMAIL_VALIDATION = z.string().email({
   message: "Invalid email address",
 });
+
 const PASSWORD_VALIDATION = z
   .string()
   .min(8, {

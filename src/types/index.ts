@@ -41,7 +41,7 @@ export interface User {
   id: string;
   email: string;
   firstname: string;
-  surname: string;
+  lastname: string;
   organizer_name: string;
   role: Role;
 }
@@ -60,6 +60,8 @@ export interface Event {
   description: string;
   location: string;
   date_time: string;
+  categories: Category[];
+  user: User;
 }
 
 // --------------------- TICKETS TYPES --------------------- //

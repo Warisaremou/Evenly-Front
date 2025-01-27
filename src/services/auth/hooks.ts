@@ -32,7 +32,7 @@ export const useLogin = () => {
 export const useUpdateProfile = () => {
   return useMutation({
     mutationKey: authKeys.updateProfile,
-    mutationFn: (credentials: Pick<User, "email" | "firstname" | "surname"> | OrganizerProfile) =>
+    mutationFn: (credentials: Pick<User, "email" | "firstname" | "lastname"> | OrganizerProfile) =>
       updateProfile(credentials),
   });
 };
