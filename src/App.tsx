@@ -1,5 +1,5 @@
 import { AccountLayout, AuthLayout, BoardLayout, DashboardLayout, EventsManagementLayout } from "@/components/layouts";
-import EventProvider from "@/contexts/event/provider";
+import AuthProvider from "@/contexts/auth/provider";
 import QueryProvider from "@/lib/providers/query-client-provider";
 import { routes } from "@/lib/routes";
 import { Home, NotFound } from "@/pages";
@@ -14,7 +14,7 @@ import { Toaster } from "sonner";
 export default function App() {
   return (
     <QueryProvider>
-      <EventProvider>
+      <AuthProvider>
         <Router>
           <Routes>
             {/* Home Routes */}
@@ -122,7 +122,7 @@ export default function App() {
             className: "p-4",
           }}
         />
-      </EventProvider>
+      </AuthProvider>
     </QueryProvider>
   );
 }

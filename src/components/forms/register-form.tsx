@@ -1,23 +1,28 @@
+import Loader from "@/components/loader";
 import { PasswordInput } from "@/components/password-input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Switch } from "@/components/ui/switch";
 import { routes } from "@/lib/routes";
-import { Login, Register, registerSchema } from "@/lib/schemas/auth";
+import { Register, registerSchema } from "@/lib/schemas/auth";
+import { useRegister } from "@/services/auth/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { toast } from "sonner";
 
 export default function RegisterForm() {
-  // const [registerAsUser, setRegisterAsUser] = useState(true);
-  const registerAsUser = true;
+  const [isOrganizer, setIsOrganizer] = useState(false);
+
+  const navigate = useNavigate();
+  const { isPending, mutateAsync } = useRegister();
 
   const form = useForm<Register>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      id_role: "",
-      organizer_name: "",
+      is_Organizer: false,
       firstname: "",
       lastname: "",
       email: "",
@@ -25,8 +30,22 @@ export default function RegisterForm() {
     },
   });
 
-  const onSubmit = (data: Login) => {
-    console.log(data);
+  useEffect(() => {
+    setIsOrganizer(form.getValues("is_Organizer"));
+  }, [form.watch("is_Organizer")]);
+
+  const onSubmit = async (credentials: Register) => {
+    mutateAsync(credentials, {
+      onSuccess: (data) => {
+        toast.success(data.message ?? "Account created successfully");
+        setTimeout(() => {
+          navigate(`/${routes.auth.login}`);
+        }, 1500);
+      },
+      onError: (error) => {
+        toast.error(error.message ?? "An error occurred");
+      },
+    });
   };
 
   return (
@@ -40,38 +59,21 @@ export default function RegisterForm() {
             {/* Role field */}
             <FormField
               control={form.control}
-              name="id_role"
+              name="is_Organizer"
               render={({ field }) => (
-                <FormItem>
-                  <div className="gap-3 flex items-center">
-                    <FormLabel>Who are you ?</FormLabel>
-                    <FormControl className="h-full">
-                      <RadioGroup
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                        className="flex items-center gap-4"
-                      >
-                        <FormItem className="flex items-center space-x-3 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem value="user" />
-                          </FormControl>
-                          <FormLabel className="font-normal">User</FormLabel>
-                        </FormItem>
-                        <FormItem className="flex items-center space-x-3 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem value="organizer" />
-                          </FormControl>
-                          <FormLabel className="font-normal">Organiser</FormLabel>
-                        </FormItem>
-                      </RadioGroup>
-                    </FormControl>
-                  </div>
-                  <FormMessage />
+                <FormItem className="flex gap-4 items-center space-y-0">
+                  <FormLabel>Register as Organizer ?</FormLabel>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
                 </FormItem>
               )}
             />
 
-            {!registerAsUser ? (
+            {isOrganizer ? (
               <>
                 {/* Organization name field */}
                 <FormField
@@ -169,11 +171,14 @@ export default function RegisterForm() {
           </div>
 
           <Button
+            disabled={isPending}
             className="w-full"
             type="submit"
             size="lg"
           >
+            {isPending && <Loader className="text-grey-100" />}
             Create account
+            <span className="sr-only">Create account</span>
           </Button>
         </div>
 

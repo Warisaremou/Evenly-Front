@@ -10,7 +10,7 @@ import { ApiResponse, User } from "@/types";
  * @returns Promise<ApiResponse> - Api response
  */
 export const register = async (credentials: Register): Promise<ApiResponse> => {
-  const response = await api.post("/auth/register", credentials);
+  const response = await api.post("/users/register", credentials);
   return response.data;
 };
 
@@ -21,7 +21,7 @@ export const register = async (credentials: Register): Promise<ApiResponse> => {
  * @returns Promise<ApiResponse> - Api response
  */
 export const login = async (credentials: Login): Promise<ApiResponse & { token: string }> => {
-  const response = await api.post("/auth/login", credentials);
+  const response = await api.post("/users/login", credentials);
   return response.data;
 };
 
@@ -31,8 +31,7 @@ export const login = async (credentials: Login): Promise<ApiResponse & { token: 
  * @returns Promise<ApiResponse> - Api response
  */
 export const getUserProfile = async (): Promise<User> => {
-  // const response = await api.get("/auth/me").then((res) => res);
-  const response = await api.get("/auth").then((res) => res);
+  const response = await api.get("/users/profile").then((res) => res);
   return response.data;
 };
 
@@ -45,6 +44,6 @@ export const getUserProfile = async (): Promise<User> => {
 export const updateProfile = async (
   credentials: Pick<User, "email" | "firstname" | "lastname"> | OrganizerProfile,
 ): Promise<ApiResponse> => {
-  const response = await api.put("/auth", credentials);
+  const response = await api.put("/users", credentials);
   return response.data;
 };

@@ -3,11 +3,12 @@ import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import UserProfileDropdown from "@/components/user-profile-dropdown";
 import { siteConfig } from "@/config/site";
+import { useAuth } from "@/contexts/auth/hook";
 import { routes } from "@/lib/routes";
 import { Link, Outlet } from "react-router";
 
 export default function BoardLayout() {
-  const isAuth = true;
+  const { isAuthenticated, userData } = useAuth();
 
   return (
     <div className="container flex flex-col min-h-screen w-full gap-10 md:gap-14">
@@ -25,8 +26,14 @@ export default function BoardLayout() {
         </ul>
 
         <>
-          {isAuth ? (
-            <UserProfileDropdown />
+          {isAuthenticated ? (
+            userData?.role === "organizer" ? (
+              <Button>
+                <Link to={`/${routes.dashboard.events.index}`}>Dashboard</Link>
+              </Button>
+            ) : (
+              <UserProfileDropdown />
+            )
           ) : (
             <div className="flex gap-2">
               <Button

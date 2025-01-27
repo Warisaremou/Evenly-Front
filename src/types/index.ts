@@ -38,12 +38,12 @@ export interface ApiResponse {
 
 // --------------------- USER TYPES --------------------- //
 export interface User {
-  id: string;
+  // id: string;
   email: string;
   firstname: string;
   lastname: string;
-  organizer_name: string;
-  role: Role;
+  organizer_name: string | null;
+  role: "admin" | "organizer" | "user";
 }
 
 // --------------------- ROLE TYPES --------------------- //

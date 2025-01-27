@@ -15,8 +15,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const { data, isLoading, isSuccess, isError } = useProfile(!!accessToken);
 
   useEffect(() => {
-    if (isSuccess) {
-      console.log(data);
+    if (isSuccess && data) {
+      // console.log(data);
       setUserData(data);
       setIsAuthenticated(true);
     }
