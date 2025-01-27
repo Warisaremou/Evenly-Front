@@ -43,7 +43,7 @@ export const getUserProfile = async (): Promise<User> => {
  * @returns Promise<ApiResponse> - Api response
  */
 export const updateProfile = async (
-  credentials: Pick<User, "email" | "firstname" | "surname"> | OrganizerProfile,
+  credentials: Pick<User, "email" | "firstname" | "lastname"> | OrganizerProfile,
 ): Promise<ApiResponse> => {
   const response = await api.put("/auth", credentials);
   return response.data;

@@ -56,11 +56,15 @@
   }
 
   .heading1 {
-    @apply text-4xl;
+    @apply font-heading-bold text-4xl;
   }
 
   .heading2 {
     @apply text-3xl;
+  }
+
+  .heading3 {
+    @apply font-heading-semibold text-2xl;
   }
 
   .section-header-title {

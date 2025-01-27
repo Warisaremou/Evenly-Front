@@ -15,6 +15,7 @@ export const useEvent = (id: string) => {
   return useQuery({
     queryKey: eventsKeys.event(id),
     queryFn: () => getEventById(id),
+    enabled: !!id,
   });
 };
 

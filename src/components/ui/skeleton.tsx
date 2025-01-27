@@ -4,7 +4,7 @@ import { HTMLAttributes } from "react";
 function Skeleton({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn("animate-pulse rounded-md bg-grey-300", className)}
+      className={cn("animate-pulse rounded-lg bg-grey-300", className)}
       {...props}
     />
   );
