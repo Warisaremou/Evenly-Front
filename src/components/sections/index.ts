@@ -1,3 +1,4 @@
+import EventListing from "@/components/sections/event-listing";
 import HeroSection from "@/components/sections/hero";
 
-export { HeroSection };
+export { EventListing, HeroSection };
