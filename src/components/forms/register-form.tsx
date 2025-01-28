@@ -35,7 +35,7 @@ export default function RegisterForm() {
   }, [form.watch("is_Organizer")]);
 
   const onSubmit = async (credentials: Register) => {
-    mutateAsync(credentials, {
+    await mutateAsync(credentials, {
       onSuccess: (data) => {
         toast.success(data.message ?? "Account created successfully");
         setTimeout(() => {

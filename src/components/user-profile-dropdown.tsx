@@ -1,6 +1,5 @@
-import avatar from "@/assets/images/user-avatar.png";
 import LogoutButton from "@/components/logout-button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,7 +14,7 @@ import { siteConfig } from "@/config/site";
 import { CircleUser } from "lucide-react";
 import { Link } from "react-router";
 
-export default function UserProfileDropdown() {
+export default function UserProfileDropdown({ firstname }: { firstname: string }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -24,11 +23,7 @@ export default function UserProfileDropdown() {
           className="relative size-10 rounded-full"
         >
           <Avatar className="border border-primary-100">
-            <AvatarImage
-              src={avatar}
-              alt={`johndoe86`}
-            />
-            <AvatarFallback>{"jogn".substring(0, 2).toUpperCase()}</AvatarFallback>
+            <AvatarFallback>{firstname.substring(0, 2).toUpperCase()}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>

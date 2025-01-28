@@ -6,11 +6,11 @@ import { User } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 // --------------- QUERIES HOOKS --------------- //
-export const useProfile = (token: boolean) => {
+export const useProfile = (accessToken: string) => {
   return useQuery({
     queryKey: authKeys.profile,
     queryFn: getUserProfile,
-    enabled: token,
+    enabled: !!accessToken,
   });
 };
 

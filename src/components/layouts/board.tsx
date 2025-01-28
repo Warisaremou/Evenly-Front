@@ -28,11 +28,14 @@ export default function BoardLayout() {
         <>
           {isAuthenticated ? (
             userData?.role === "organizer" ? (
-              <Button>
-                <Link to={`/${routes.dashboard.events.index}`}>Dashboard</Link>
+              <Button
+                variant="secondary"
+                asChild
+              >
+                <Link to={`/dashboard/${routes.dashboard.events.index}`}>Dashboard</Link>
               </Button>
             ) : (
-              <UserProfileDropdown />
+              <UserProfileDropdown firstname={userData?.firstname as string} />
             )
           ) : (
             <div className="flex gap-2">

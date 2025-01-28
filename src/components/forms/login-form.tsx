@@ -1,14 +1,22 @@
+import Loader from "@/components/loader";
 import { PasswordInput } from "@/components/password-input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useLocalStorage } from "@/hooks/use-localstorage";
 import { routes } from "@/lib/routes";
 import { Login, loginSchema } from "@/lib/schemas/auth";
+import { useLogin } from "@/services/auth/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { toast } from "sonner";
 
 export default function LoginForm() {
+  const navigate = useNavigate();
+  const { setItem } = useLocalStorage();
+  const { isPending, mutateAsync } = useLogin();
+
   const form = useForm<Login>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -17,8 +25,21 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = (data: Login) => {
-    console.log(data);
+  const onSubmit = async (credentials: Login) => {
+    await mutateAsync(credentials, {
+      onSuccess: (data) => {
+        setItem("accessToken", data.token);
+        toast.success(data.message ?? "Logged in successfully");
+        setTimeout(() => {
+          navigate("/");
+          window.location.reload();
+        }, 1500);
+      },
+      onError: (error) => {
+        // console.log(error.response.data.message);
+        toast.error(error.message ?? "An error occurred");
+      },
+    });
   };
 
   return (
@@ -67,11 +88,14 @@ export default function LoginForm() {
           </div>
 
           <Button
+            disabled={isPending}
             className="w-full"
             type="submit"
             size="lg"
           >
+            {isPending && <Loader className="text-grey-100" />}
             Log in
+            <span className="sr-only">Log in</span>
           </Button>
         </div>
 

@@ -1,5 +1,4 @@
 import { useLocalStorage } from "@/hooks/use-localstorage";
-import { routes } from "@/lib/routes";
 import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -35,9 +34,9 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       // console.error("Expired token");
       // TODO: add refresh token later
-      if (typeof window !== "undefined") {
-        window.location.href = `/${routes.auth.login}`; // Adjust the login path as needed
-      }
+      // if (typeof window !== "undefined") {
+      //   window.location.href = `/${routes.auth.login}`; // Adjust the login path as needed
+      // }
     }
 
     return Promise.reject(error);
