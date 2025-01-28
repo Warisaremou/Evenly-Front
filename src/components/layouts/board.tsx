@@ -35,7 +35,7 @@ export default function BoardLayout() {
                 <Link to={`/dashboard/${routes.dashboard.events.index}`}>Dashboard</Link>
               </Button>
             ) : (
-              <UserProfileDropdown firstname={userData?.firstname as string} />
+              <UserProfileDropdown userData={userData!} />
             )
           ) : (
             <div className="flex gap-2">

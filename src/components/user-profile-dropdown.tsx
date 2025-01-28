@@ -11,10 +11,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { siteConfig } from "@/config/site";
+import { User } from "@/types";
 import { CircleUser } from "lucide-react";
 import { Link } from "react-router";
 
-export default function UserProfileDropdown({ firstname }: { firstname: string }) {
+export default function UserProfileDropdown({ userData }: { userData: User }) {
+  const { firstname, email } = userData;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -33,7 +36,7 @@ export default function UserProfileDropdown({ firstname }: { firstname: string }
         forceMount
       >
         <DropdownMenuLabel className="font-body-medium">
-          <p className="text-sm py-2 leading-none text-grey-500">johndoe@gmail.com</p>
+          <p className="text-sm py-2 leading-none text-grey-500">{email}</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
