@@ -16,14 +16,14 @@ export default function BoardLayout() {
       <nav className="flex flex-row items-center justify-between py-4 bg-grey-100">
         <Logo />
 
-        <ul className="flex flex-row items-center gap-x-1 md:gap-x-4 w-full justify-center">
+        <div className="flex flex-row items-center gap-x-1 md:gap-x-4 w-full justify-center">
           {siteConfig.mainNav.map((item, index) => (
             <CustomLink
               item={item}
               key={`${index}-${item.title}`}
             />
           ))}
-        </ul>
+        </div>
 
         <>
           {isAuthenticated ? (
@@ -64,9 +64,9 @@ export default function BoardLayout() {
 
       {/* Footer */}
       <div className="flex max-md:flex-col items-center justify-center border-t border-grey-300 py-5 lg:py-12 px-5 max-md:gap-2 gap-16">
-        <h5 className="text-xs">Privacy Policy</h5>
-        <h5 className="text-xs">Terms of Service</h5>
-        <h5 className="text-xs">© 2025 Evenly. All Rights Reserved.</h5>
+        <span className="text-xs">Privacy Policy</span>
+        <span className="text-xs">Terms of Service</span>
+        <span className="text-xs">© 2025 Evenly. All Rights Reserved.</span>
       </div>
     </div>
   );

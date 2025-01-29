@@ -1,4 +1,3 @@
-import Loader from "@/components/loader";
 import { AuthContext } from "@/contexts/auth/context";
 import { useLocalStorage } from "@/hooks/use-localstorage";
 import { useProfile } from "@/services/auth/hooks";
@@ -23,7 +22,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     if (isError) {
       setIsAuthenticated(false);
     }
-  }, [accessToken, data, isError]);
+  }, [accessToken]);
 
   return (
     <AuthContext.Provider
@@ -34,13 +33,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         isLoading: isLoading,
       }}
     >
-      {isLoading ? (
-        <div className="flex justify-center items-center h-screen">
-          <Loader />
-        </div>
-      ) : (
-        <>{children}</>
-      )}
+      {children}
     </AuthContext.Provider>
   );
 }

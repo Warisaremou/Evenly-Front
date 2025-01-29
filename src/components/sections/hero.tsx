@@ -12,7 +12,10 @@ export default function HeroSection() {
       </h1>
       <div className="flex p-4 bg-grey-100 gap-3 absolute -bottom-9 rounded-xl w-full max-w-xs md:max-w-[37rem] shadow-[0_4px_4px_0_rgba(167,167,167,0.16)] items-center">
         <Select>
-          <SelectTrigger className="flex-1">
+          <SelectTrigger
+            aria-label="Select place"
+            className="flex-1"
+          >
             <SelectValue placeholder="Select place" />
           </SelectTrigger>
           <SelectContent>
@@ -22,8 +25,8 @@ export default function HeroSection() {
         </Select>
         <CategoriesSelection className="flex-1" />
         <Button
+          aria-label="Search events"
           size="icon"
-          className=""
         >
           <Search size={18} />
         </Button>

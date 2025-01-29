@@ -8,7 +8,10 @@ export default function Logo() {
       to={routes.index}
       aria-label="Evenly Logo"
     >
-      <img src={logo} />
+      <img
+        src={logo}
+        alt="Evenly Logo"
+      />
     </Link>
   );
 }

@@ -19,7 +19,10 @@ export default function CategoriesSelection({ className }: Props) {
 
   return (
     <Select>
-      <SelectTrigger className={className}>
+      <SelectTrigger
+        aria-label="Select category"
+        className={className}
+      >
         <SelectValue placeholder="Select category" />
       </SelectTrigger>
       <SelectContent>
