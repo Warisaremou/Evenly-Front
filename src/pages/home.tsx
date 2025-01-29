@@ -2,9 +2,12 @@ import { EventListing, HeroSection } from "@/components/sections";
 
 export default function Home() {
   return (
-    <div className="space-y-36">
+    <div className="space-y-24 md:space-y-36">
       <HeroSection />
-      <EventListing />
+      <EventListing
+        sectionTitle="Upoming events"
+        withCTA
+      />
     </div>
   );
 }

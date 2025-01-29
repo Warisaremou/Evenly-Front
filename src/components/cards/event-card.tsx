@@ -29,7 +29,7 @@ export default function EventCard({ event }: Props) {
           </div>
           <div className="flex items-center gap-2">
             <MapPin size={18} />
-            <span className="text-sm font-body-medium">{location}</span>
+            <span className="text-sm font-body-medium line-clamp-1">{location}</span>
           </div>
         </div>
       </div>
