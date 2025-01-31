@@ -21,7 +21,7 @@ export default function EventCard({ event }: Props) {
       <div>
         <h2 className="heading3">{title}</h2>
 
-        {/* Informations sur la date et le lieu */}
+        {/* Informations of the date and places */}
         <div className="flex items-center gap-2.5">
           <div className="flex items-center gap-2">
             <CalendarClock size={18} />
