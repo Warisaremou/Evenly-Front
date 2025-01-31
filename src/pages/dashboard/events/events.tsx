@@ -1,6 +1,6 @@
 import { NoDataFoundCard } from "@/components/cards";
 import CategoriesSelection from "@/components/categories-selection";
-import Loader from "@/components/loader";
+import Loader from "@/components/loaders/loader";
 import { Searchbar } from "@/components/searchbar";
 import { eventsColumns } from "@/components/tables/events/columns";
 import { Button } from "@/components/ui/button";

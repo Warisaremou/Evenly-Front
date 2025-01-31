@@ -1,12 +1,12 @@
 import api from "@/lib/axios-instance";
-import { ApiResponse, Event } from "@/types";
+import { ApiResponse, Event, EventsListingType } from "@/types";
 
 /**
  * Query to get all events
  *
  * @returns Promise<Event[]> - List of events
  */
-export const getAllEvents = async (): Promise<Event[]> => {
+export const getAllEvents = async (): Promise<EventsListingType[]> => {
   const response = await api.get("/events").then((res) => res);
   return response.data;
 };

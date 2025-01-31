@@ -1,4 +1,4 @@
-import Loader from "@/components/loader";
+import Loader from "@/components/loaders/loader";
 import { PasswordInput } from "@/components/password-input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";

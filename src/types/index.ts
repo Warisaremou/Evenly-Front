@@ -64,6 +64,8 @@ export interface Event {
   user: User;
 }
 
+export type EventsListingType = Omit<Event, "user">;
+
 // --------------------- TICKETS TYPES --------------------- //
 export interface TicketType {
   id: string;

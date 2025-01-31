@@ -1,5 +1,5 @@
 import { EventCard } from "@/components/cards";
-import Loader from "@/components/loader";
+import { EventCardLoader } from "@/components/loaders";
 import { routes } from "@/lib/routes";
 import { useEvents } from "@/services/events/hooks";
 import { useEffect } from "react";
@@ -36,7 +36,7 @@ export default function EventListing({ sectionTitle, withCTA = false }: Props) {
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {isLoading ? (
-          <Loader />
+          Array.from({ length: 3 }).map((_, i) => <EventCardLoader key={i} />)
         ) : (
           <>
             {data &&

@@ -1,5 +1,5 @@
 import { NoDataFoundCard } from "@/components/cards";
-import Loader from "@/components/loader";
+import Loader from "@/components/loaders/loader";
 import { Searchbar } from "@/components/searchbar";
 import { ticketsColumns } from "@/components/tables/tickets/columns";
 import { DataTable } from "@/components/ui/data-table";

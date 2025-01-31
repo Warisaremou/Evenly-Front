@@ -1,4 +1,4 @@
-import Loader from "@/components/loader";
+import Loader from "@/components/loaders/loader";
 import { useAuth } from "@/contexts/auth/hook";
 import { routes } from "@/lib/routes";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router";

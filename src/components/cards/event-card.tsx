@@ -1,14 +1,14 @@
-import { Event } from "@/types";
+import { EventsListingType } from "@/types";
 import { CalendarClock, MapPin } from "lucide-react";
 
 type Props = {
-  event: Event;
+  event: EventsListingType;
 };
 
 export default function EventCard({ event }: Props) {
   const { cover, date_time, title, location } = event;
   return (
-    <div className="flex flex-col gap-2 ">
+    <div className="flex flex-col gap-2">
       {/* Event cover */}
       <div className="overflow-hidden w-full aspect-[5/4] rounded-lg bg-grey-300">
         <img

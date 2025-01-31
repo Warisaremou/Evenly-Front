@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
-import Loader from "../loader";
+import Loader from "../loaders/loader";
 import { Skeleton } from "../ui/skeleton";
 
 export default function AddEditEventForm() {
