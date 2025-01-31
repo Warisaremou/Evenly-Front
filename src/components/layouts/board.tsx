@@ -6,9 +6,10 @@ import { siteConfig } from "@/config/site";
 import { useAuth } from "@/contexts/auth/hook";
 import { routes } from "@/lib/routes";
 import { Link, Outlet } from "react-router";
+import { Skeleton } from "../ui/skeleton";
 
 export default function BoardLayout() {
-  const { isAuthenticated, userData } = useAuth();
+  const { isAuthenticated, userData, isLoading } = useAuth();
 
   return (
     <div className="container flex flex-col min-h-screen w-full gap-10 md:gap-14">
@@ -26,7 +27,9 @@ export default function BoardLayout() {
         </div>
 
         <>
-          {isAuthenticated ? (
+          {isLoading ? (
+            <Skeleton className="w-32 h-10" />
+          ) : isAuthenticated ? (
             userData?.role === "organizer" ? (
               <Button
                 variant="secondary"

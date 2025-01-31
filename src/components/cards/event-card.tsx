@@ -25,11 +25,11 @@ export default function EventCard({ event }: Props) {
         <div className="flex items-center gap-2.5">
           <div className="flex items-center gap-2">
             <CalendarClock size={18} />
-            <span className="text-sm font-body-medium">{date_time}</span>
+            <span className="text-xs font-body-medium">{date_time}</span>
           </div>
           <div className="flex items-center gap-2">
             <MapPin size={18} />
-            <span className="text-sm font-body-medium line-clamp-1">{location}</span>
+            <span className="text-xs font-body-medium line-clamp-1">{location}</span>
           </div>
         </div>
       </div>

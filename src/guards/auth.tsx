@@ -1,17 +1,29 @@
+import Loader from "@/components/loader";
 import { useAuth } from "@/contexts/auth/hook";
 import { routes } from "@/lib/routes";
-import { Navigate, Outlet, useLocation } from "react-router";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router";
 
 export default function AuthGuard() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  if (!isAuthenticated) {
-    return <Navigate to={`/${routes.auth.login}`} />;
+  const isAuthPage = location.pathname.includes(routes.auth.login || routes.auth.register);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader />
+      </div>
+    );
   }
 
-  if (isAuthenticated && location.pathname.includes(routes.auth.login || routes.auth.register)) {
-    return <Navigate to={`/${routes.index}`} />;
+  if (isAuthenticated && isAuthPage) {
+    navigate(-1);
+  }
+
+  if (!isAuthenticated && !isAuthPage) {
+    return <Navigate to={routes.auth.login} />;
   }
 
   return <Outlet />;

@@ -22,7 +22,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     if (isError) {
       setIsAuthenticated(false);
     }
-  }, [accessToken]);
+  }, [accessToken, data, isError]);
 
   return (
     <AuthContext.Provider
