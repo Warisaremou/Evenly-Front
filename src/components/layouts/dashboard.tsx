@@ -1,11 +1,13 @@
 import { DesktopSidebar, MobileSidebar } from "@/components/sidebars";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/auth/hook";
 import { PanelLeft } from "lucide-react";
 import { useRef } from "react";
 import { Outlet } from "react-router";
 
 export default function DashboardLayout() {
   const sheetTriggerRef = useRef<HTMLButtonElement>(null);
+  const { userData } = useAuth();
 
   return (
     <div className="flex h-screen">
@@ -14,7 +16,7 @@ export default function DashboardLayout() {
 
       <div className="h-screen flex-1 overflow-y-scroll">
         {/* Header */}
-        <header className="sticky top-0 flex items-center justify-between gap-3 border-b border-grey-300 bg-grey-100 px-5 py-3">
+        <header className="sticky top-0 flex items-center justify-between gap-3 border-b border-grey-300 bg-grey-100 px-5 py-3 z-50">
           <Button
             variant="tertiary"
             size="icon"
@@ -25,7 +27,7 @@ export default function DashboardLayout() {
           >
             <PanelLeft size={20} />
           </Button>
-          <h3 className="font-heading-semibold text-grey-500">Empire Group</h3>
+          <h3 className="font-heading-semibold text-grey-500">{userData?.organizer_name}</h3>
         </header>
         <MobileSidebar ref={sheetTriggerRef} />
 

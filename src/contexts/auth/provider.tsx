@@ -14,15 +14,17 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const { data, isLoading, isError } = useProfile(accessToken!);
 
   useEffect(() => {
+    if (isError) {
+      setIsAuthenticated(false);
+    }
+  }, [isError]);
+
+  useEffect(() => {
     if (data) {
       setUserData(data);
       setIsAuthenticated(true);
     }
-
-    if (isError) {
-      setIsAuthenticated(false);
-    }
-  }, [accessToken, data, isError]);
+  }, [accessToken, data]);
 
   return (
     <AuthContext.Provider

@@ -1,12 +1,12 @@
 import CustomLink from "@/components/custom-link";
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import UserProfileDropdown from "@/components/user-profile-dropdown";
 import { siteConfig } from "@/config/site";
 import { useAuth } from "@/contexts/auth/hook";
 import { routes } from "@/lib/routes";
 import { Link, Outlet } from "react-router";
-import { Skeleton } from "../ui/skeleton";
 
 export default function BoardLayout() {
   const { isAuthenticated, userData, isLoading } = useAuth();

@@ -38,7 +38,7 @@ export interface ApiResponse {
 
 // --------------------- USER TYPES --------------------- //
 export interface User {
-  // id: string;
+  id: string;
   email: string;
   firstname: string;
   lastname: string;
@@ -59,12 +59,14 @@ export interface Event {
   title: string;
   description: string;
   location: string;
-  date_time: string;
+  date: Date;
+  time: string;
   categories: Category[];
   user: User;
 }
 
 export type EventsListingType = Omit<Event, "user">;
+export type EventDetailsType = Omit<Event, "user"> & { organizer_name: string };
 
 // --------------------- TICKETS TYPES --------------------- //
 export interface TicketType {

@@ -23,8 +23,17 @@ export const createAndUpdateEventSchema = z
     location: z.string().min(3, {
       message: "Event location must have at least 3 characters",
     }),
-    date_time: z.string(),
-    // date_time: z.string().datetime({ local: true }),
+    date: z.date(),
+    time: z.string().superRefine((value, ctx) => {
+      // Check if the time is in the correct format(HH:mm)
+      const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+      if (!timeRegex.test(value)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Time must be in the format HH:mm",
+        });
+      }
+    }),
   })
   .required();
 

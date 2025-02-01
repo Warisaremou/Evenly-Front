@@ -16,7 +16,6 @@ export default function Imageupload({ maxSize, disabled, accept, onUpload, ...pr
   const [filePath, setFilePath] = useState<string | null>(null);
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    // console.log(e.target.files![0]);
     setFilePath(URL.createObjectURL(e.target.files![0]));
     onUpload?.(e.target.files![0]);
   };
@@ -24,7 +23,7 @@ export default function Imageupload({ maxSize, disabled, accept, onUpload, ...pr
   return (
     <div
       className={cn(
-        "relative border overflow-hidden min-h-48  w-full bg-grey-100 rounded-[18px] p-5 flex flex-col items-center gap-3",
+        "relative border overflow-hidden min-h-48  w-full bg-grey-100 rounded-2xl p-5 flex flex-col items-center gap-3",
         filePath ? "border-grey-200" : "border-dashed border-slate-400",
       )}
     >
@@ -39,14 +38,15 @@ export default function Imageupload({ maxSize, disabled, accept, onUpload, ...pr
           </div>
           <Button
             variant="tertiary"
-            className="absolute z-30 top-1/2 -translate-y-1/2 hover:bg-grey-100 hover:text-grey-500"
+            className="absolute z-40 top-1/2 -translate-y-1/2 hover:bg-grey-100 hover:text-grey-500"
             disabled={disabled}
             onClick={(e) => {
               fileInputRef.current?.click();
               e.preventDefault();
+              e.stopPropagation();
             }}
           >
-            Upload image
+            Change
           </Button>
         </>
       ) : (

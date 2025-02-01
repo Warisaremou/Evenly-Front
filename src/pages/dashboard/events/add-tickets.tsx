@@ -5,10 +5,11 @@ import { ticketsColumns } from "@/components/tables/tickets/columns";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { routes } from "@/lib/routes";
 import { useEventTickets } from "@/services/tickets/hooks";
 import { Tickets } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { toast } from "sonner";
 
 export default function DashboardAddTickets() {
@@ -66,7 +67,12 @@ export default function DashboardAddTickets() {
               />
 
               <div className="flex justify-end">
-                <Button disabled={isError}>Save and continue</Button>
+                <Button
+                  disabled={isError}
+                  asChild
+                >
+                  <Link to={`/dashboard/${routes.dashboard.events.index}`}>Save and continue</Link>
+                </Button>
               </div>
             </div>
           ) : (

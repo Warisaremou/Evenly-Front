@@ -35,11 +35,13 @@ export default function AddEditTicketForm({ id_event, onToogleDialog }: Props) {
       quantity: 0,
       price: 0,
       event_id: id_event,
-      ticket_type_id: "",
+      type_ticket_id: "",
     },
   });
 
   const onSubmit = (data: CreateAndUpdateTicket) => {
+    // console.log(data);
+    // return;
     mutateAsync(data, {
       onSuccess: (response) => {
         toast.success(response.message ?? "Ticket added successfully");
@@ -65,7 +67,7 @@ export default function AddEditTicketForm({ id_event, onToogleDialog }: Props) {
           {/* Ticket type field */}
           <FormField
             control={form.control}
-            name="ticket_type_id"
+            name="type_ticket_id"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Ticket type</FormLabel>

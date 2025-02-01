@@ -52,7 +52,7 @@
   }
 
   body {
-    @apply min-h-screen bg-grey-100 font-body-regular text-grey-500;
+    @apply bg-grey-100 font-body-regular text-grey-500;
   }
 
   .heading1 {

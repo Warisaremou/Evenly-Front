@@ -18,8 +18,7 @@ export const getOrganizerTickets = async (): Promise<Ticket[]> => {
  * @returns Promise<Ticket[]> - List of event tickets
  */
 export const getEventTickets = async (id_event: string): Promise<Ticket[]> => {
-  // const response = await api.get(`/tickets/event/${id_event}`).then((res) => res);
-  const response = await api.get(`/tickets?event.id=${id_event}`).then((res) => res);
+  const response = await api.get(`/tickets/event/${id_event}`).then((res) => res);
   return response.data;
 };
 
@@ -29,7 +28,7 @@ export const getEventTickets = async (id_event: string): Promise<Ticket[]> => {
  * @returns Promise<TicketType[]> - List of ticket types
  */
 export const getTicketTypes = async (): Promise<TicketType[]> => {
-  const response = await api.get("/ticket_types").then((res) => res);
+  const response = await api.get("/type-tickets").then((res) => res);
   return response.data;
 };
 

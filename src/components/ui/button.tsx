@@ -14,6 +14,9 @@ const buttonVariants = cva(
         destructive: "bg-state-error focus-visible:ring-state-error-foreground text-state-error-foreground",
         "destructive-secondary": "hover:bg-state-error focus-visible:ring-state-error text-state-error-foreground",
         tertiary: "text-grey-500 bg-grey-100 hover:bg-primary-100 hover:text-primary-300 focus-visible:ring-grey-300",
+        "tertiary-outline":
+          "text-grey-500 bg-grey-100 border border-grey-300 hover:border-primary-200 focus-visible:ring-grey-300",
+        ghost: "text-grey-500 bg-grey-100 hover:bg-grey-300 focus-visible:ring-grey-300",
       },
       size: {
         default: "h-10 px-4 py-2.5",

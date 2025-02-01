@@ -3,19 +3,24 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { routes } from "@/lib/routes";
 import { CreateAndUpdateEvent, createAndUpdateEventSchema } from "@/lib/schemas/events";
+import { cn } from "@/lib/utils";
 import { useCategories } from "@/services/categories/hooks";
 import { useAddEvent } from "@/services/events/hooks";
 import { eventsKeys } from "@/services/events/keys";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import Loader from "../loaders/loader";
+import { Calendar } from "../ui/calendar";
 import { Skeleton } from "../ui/skeleton";
 
 export default function AddEditEventForm() {
@@ -34,7 +39,8 @@ export default function AddEditEventForm() {
       categories: [],
       description: "",
       location: "",
-      date_time: "",
+      date: new Date(),
+      time: "",
     },
   });
 
@@ -59,33 +65,23 @@ export default function AddEditEventForm() {
       });
     }
 
-    await mutateAsync(
-      {
-        // ? Send the image as a file while connecting to the backend
-        cover: URL.createObjectURL(data.cover),
-        date_time: data.date_time,
-        description: data.description,
-        location: data.location,
-        title: data.title,
+    await mutateAsync(data, {
+      onSuccess: (response) => {
+        toast.success(response.message ?? "Event added successfully");
+        queryClient.invalidateQueries({
+          queryKey: eventsKeys.organizerEvents,
+        });
+
+        setTimeout(() => {
+          // Redirect to the add tickets page with the event ID sended from the backend
+          navigate(`/dashboard/events/${response.data.id}/add-tickets`);
+        }, 1000);
       },
-      {
-        onSuccess: (response) => {
-          toast.success(response.message ?? "Event added successfully");
-          queryClient.invalidateQueries({
-            queryKey: eventsKeys.organizerEvents,
-          });
-          console.log(response.data.id);
-          setTimeout(() => {
-            // TODO: Redirect to the add tickets page with the event ID sended from the backend
-            navigate(`/dashboard/events/qsdsdqsdqsd/add-tickets`);
-          }, 1000);
-        },
-        onError: () => {
-          // toast.error(error.message);
-          toast.error("Failed to add event");
-        },
+      onError: () => {
+        // toast.error(error.message);
+        toast.error("Failed to add event");
       },
-    );
+    });
   };
 
   return (
@@ -106,9 +102,9 @@ export default function AddEditEventForm() {
                     maxSize={2}
                     accept="image/png, image/jpeg, image/jpg"
                     onUpload={(file) => {
-                      // field.setValue("cover", file);
                       field.onChange(file);
                     }}
+                    disabled={isPending}
                   />
                 </FormControl>
                 <FormMessage />
@@ -212,16 +208,53 @@ export default function AddEditEventForm() {
             )}
           />
 
-          {/* Event date & time field */}
+          {/* Event date field */}
           <FormField
             control={form.control}
-            name="date_time"
+            name="date"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Date</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="tertiary-outline"
+                        className={cn("w-[240px] pl-3 text-left font-normal", !field.value && "text-muted-foreground")}
+                      >
+                        {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    className="w-auto p-0"
+                    align="start"
+                  >
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Event time field */}
+          <FormField
+            control={form.control}
+            name="time"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Date and Time</FormLabel>
+                <FormLabel>Time</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Event date and time"
+                    placeholder="Event time (HH:mm)"
                     {...field}
                   />
                 </FormControl>

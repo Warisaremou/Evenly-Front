@@ -64,7 +64,7 @@ export const createAndUpdateTicketSchema = z
     event_id: z.string({
       required_error: "Event id is required",
     }),
-    ticket_type_id: z.string({
+    type_ticket_id: z.string({
       required_error: "Ticket type id is required",
     }),
   })

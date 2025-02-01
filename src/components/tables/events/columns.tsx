@@ -25,8 +25,12 @@ export const eventsColumns: ColumnDef<Event>[] = [
     header: "Location",
   },
   {
-    accessorKey: "date_time",
-    header: "Date & time",
+    accessorKey: "date",
+    header: "Date",
+  },
+  {
+    accessorKey: "time",
+    header: "Time",
   },
   {
     id: "actions",

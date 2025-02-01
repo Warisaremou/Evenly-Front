@@ -1,6 +1,6 @@
+import { CreateAndUpdateEvent } from "@/lib/schemas/events";
 import { eventsKeys } from "@/services/events/keys";
 import { addEvent, getAllEvents, getEventById, getOrganizerEvents } from "@/services/events/queries";
-import { Event } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 // --------------- QUERIES HOOKS --------------- //
@@ -30,6 +30,6 @@ export const useOrganizerEvents = () => {
 export const useAddEvent = () => {
   return useMutation({
     mutationKey: eventsKeys.addEvent,
-    mutationFn: (credentials: Omit<Event, "id">) => addEvent(credentials),
+    mutationFn: (credentials: CreateAndUpdateEvent) => addEvent(credentials),
   });
 };

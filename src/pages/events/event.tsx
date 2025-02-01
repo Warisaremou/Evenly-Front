@@ -12,19 +12,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { routes } from "@/lib/routes";
 import { useEvent } from "@/services/events/hooks";
 import { eventsKeys } from "@/services/events/keys";
-import { Category } from "@/types";
 import { useQueryClient } from "@tanstack/react-query";
 import { Bookmark, CalendarClock, MapPin, Minus, Plus, RefreshCcw, Ticket } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { toast } from "sonner";
-
-const categories = [
-  {
-    id: "1",
-    name: "Music",
-  },
-] satisfies Array<Category>;
 
 export default function Event() {
   const [ticketQuantity, setTicketQuantity] = useState(1);
@@ -76,7 +68,7 @@ export default function Event() {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>Event title</BreadcrumbPage>
+                <BreadcrumbPage>{data.title}</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -92,7 +84,7 @@ export default function Event() {
               </div>
               <div className="flex flex-col lg:flex-row gap-20">
                 {/* Event details */}
-                <div className="space-y-6">
+                <div className="space-y-6 w-full">
                   {/* Title & Description */}
                   <div className="space-y-3.5">
                     <h1 className="heading1">{data.title}</h1>
@@ -105,7 +97,7 @@ export default function Event() {
                       <h3 className="heading3">Date and time</h3>
                       <div className="flex items-center gap-1.5">
                         <CalendarClock size={18} />
-                        <p className="text-sm">{data.date_time}</p>
+                        <p className="text-sm">{`${data.date} at ${data.time}`}</p>
                       </div>
                     </div>
                     {/* Location */}
@@ -119,18 +111,20 @@ export default function Event() {
                     {/* Categories */}
                     <div className="space-y-1">
                       <h3 className="heading3 items-center">Categories</h3>
-                      {categories.map((category) => (
-                        <Badge
-                          variant="secondary"
-                          key={category.id}
-                        >
-                          {category.name}
-                        </Badge>
-                      ))}
+                      <div className="flex flex-wrap gap-1.5">
+                        {data.categories.map((category) => (
+                          <Badge
+                            variant="secondary"
+                            key={category.id}
+                          >
+                            {category.name}
+                          </Badge>
+                        ))}
+                      </div>
                     </div>
                   </div>
                   {/* Organizer name */}
-                  <h4 className="font-body-semibold">Organized by : Empire Group</h4>
+                  <h4 className="font-body-semibold">Organized by : {data.organizer_name}</h4>
                 </div>
 
                 {/* Book & Favorites */}
