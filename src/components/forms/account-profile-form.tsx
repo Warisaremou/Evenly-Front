@@ -2,7 +2,6 @@ import Loader from "@/components/loaders/loader";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
 import { useAuth } from "@/contexts/auth/hook";
 import { AccountProfile, updateAccountProfileSchema } from "@/lib/schemas/users";
 import { useUpdateProfile } from "@/services/auth/hooks";
@@ -39,10 +38,8 @@ export default function AccountProfileForm() {
     fetchData();
   }, [userData, form]);
 
-  const onSubmit = (data: AccountProfile) => {
-    console.log(data);
-    return;
-    mutateAsync(data, {
+  const onSubmit = async (data: AccountProfile) => {
+    await mutateAsync(data, {
       onSuccess: (response) => {
         toast.success(response.message ?? "Profile updated successfully");
         queryClient.invalidateQueries({
@@ -70,17 +67,13 @@ export default function AccountProfileForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <Input
-                      placeholder="Email"
-                      {...field}
-                    />
-                  </FormControl>
-                </Select>
+                <FormControl>
+                  <Input
+                    disabled
+                    placeholder="Email"
+                    {...field}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

@@ -4,4 +4,5 @@ export const authKeys = {
   login: ["login"],
   profile: ["profile"],
   updateProfile: ["updateProfile"],
+  logOut: ["logOut"],
 };

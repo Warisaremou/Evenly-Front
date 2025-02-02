@@ -5,10 +5,11 @@ import { toast } from "sonner";
 
 type Props = {
   className?: string;
-  onChange?: () => void;
+  // eslint-disable-next-line no-unused-vars
+  onChange?: (value: string) => void;
 };
 
-export default function CategoriesSelection({ className }: Props) {
+export default function CategoriesSelection({ className, onChange }: Props) {
   const { data, isLoading, isError } = useCategories();
 
   useEffect(() => {
@@ -18,7 +19,7 @@ export default function CategoriesSelection({ className }: Props) {
   }, [isError]);
 
   return (
-    <Select>
+    <Select onValueChange={onChange}>
       <SelectTrigger
         aria-label="Select category"
         className={className}

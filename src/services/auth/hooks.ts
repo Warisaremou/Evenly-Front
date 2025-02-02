@@ -1,8 +1,7 @@
 import { Login, Register } from "@/lib/schemas/auth";
-import { OrganizerProfile } from "@/lib/schemas/users";
 import { authKeys } from "@/services/auth/keys";
-import { getUserProfile, login, register, updateProfile } from "@/services/auth/queries";
-import { User } from "@/types";
+import { getUserProfile, login, logOut, register, updateProfile } from "@/services/auth/queries";
+import { UpdateProfile } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 // --------------- QUERIES HOOKS --------------- //
@@ -32,7 +31,14 @@ export const useLogin = () => {
 export const useUpdateProfile = () => {
   return useMutation({
     mutationKey: authKeys.updateProfile,
-    mutationFn: (credentials: Pick<User, "email" | "firstname" | "lastname"> | OrganizerProfile) =>
-      updateProfile(credentials),
+    mutationFn: (credentials: UpdateProfile) => updateProfile(credentials),
+  });
+};
+
+export const useLogout = () => {
+  return useMutation({
+    mutationKey: authKeys.logOut,
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+    mutationFn: (data: string) => logOut(),
   });
 };

@@ -1,7 +1,6 @@
 import api from "@/lib/axios-instance";
 import { Login, Register } from "@/lib/schemas/auth";
-import { OrganizerProfile } from "@/lib/schemas/users";
-import { ApiResponse, User } from "@/types";
+import { ApiResponse, UpdateProfile, User } from "@/types";
 
 /**
  * Query to create account
@@ -41,9 +40,17 @@ export const getUserProfile = async (): Promise<User> => {
  * @param {Omit<User, "id" | "role">} credentials - User data
  * @returns Promise<ApiResponse> - Api response
  */
-export const updateProfile = async (
-  credentials: Pick<User, "email" | "firstname" | "lastname"> | OrganizerProfile,
-): Promise<ApiResponse> => {
-  const response = await api.put("/users", credentials);
+export const updateProfile = async (credentials: UpdateProfile): Promise<ApiResponse> => {
+  const response = await api.put("/users/profile", credentials);
+  return response.data;
+};
+
+/**
+ * Query to log out a user
+ *
+ * @returns Promise<ApiResponse> - Api response
+ */
+export const logOut = async (): Promise<ApiResponse> => {
+  const response = await api.post("/users/logOut");
   return response.data;
 };

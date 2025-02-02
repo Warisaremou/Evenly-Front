@@ -1,3 +1,4 @@
+import { AccountProfile, OrganizerProfile } from "@/lib/schemas/users";
 import { Dispatch, SetStateAction } from "react";
 
 export interface NavItem {
@@ -16,6 +17,11 @@ export interface NavItemWithOptionalChildren extends NavItem {
 }
 
 export type MainNavItem = NavItemWithOptionalChildren;
+
+export type searchParamsType = {
+  place: string;
+  category: string;
+};
 
 // --------------------- CONTEXTS TYPES --------------------- //
 export interface AuthContextType {
@@ -45,6 +51,8 @@ export interface User {
   organizer_name: string | null;
   role: "admin" | "organizer" | "user";
 }
+
+export type UpdateProfile = Omit<OrganizerProfile, "email"> | Omit<AccountProfile, "email">;
 
 // --------------------- ROLE TYPES --------------------- //
 export interface Role {

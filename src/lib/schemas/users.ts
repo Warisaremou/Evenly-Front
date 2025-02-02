@@ -11,9 +11,6 @@ export const updateOrganizerProfileSchema = z
       .min(3, {
         message: "Organization name must have at least 3 characters",
       })
-      .max(10, {
-        message: "Organization name must have at most 10 characters",
-      })
       .trim(),
   })
   .required();
