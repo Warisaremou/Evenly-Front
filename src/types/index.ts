@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { AccountProfile, OrganizerProfile } from "@/lib/schemas/users";
 import { Dispatch, SetStateAction } from "react";
 
@@ -34,6 +35,14 @@ export interface AuthContextType {
 export interface EventContextType {
   eventID: string;
   setEventID: Dispatch<SetStateAction<string>>;
+}
+
+// --------------------- STORES TYPES --------------------- //
+export interface BookmarkStore {
+  bookmarks: EventsListingType[];
+  addToBookmarks: (data: EventsListingType) => void;
+  removeFromBookmarks: (data: EventsListingType) => void;
+  // syncBookmarks: () => void;
 }
 
 // --------------------- API RESPONSE TYPES --------------------- //

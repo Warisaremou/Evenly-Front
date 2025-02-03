@@ -36,7 +36,6 @@ export default function LoginForm() {
         }, 1500);
       },
       onError: (error) => {
-        // console.log(error.response.data.message);
         toast.error(error.message ?? "An error occurred");
       },
     });
