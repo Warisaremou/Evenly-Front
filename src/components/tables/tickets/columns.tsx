@@ -4,10 +4,10 @@ import { ColumnDef } from "@tanstack/react-table";
 
 export const ticketsColumns: ColumnDef<Ticket>[] = [
   // {
-  //   accessorKey: "ticket_type",
+  //   accessorKey: "ticket_type_name",
   //   header: "Type",
   //   cell: ({ row }) => {
-  //     return <Badge variant="tertiary">{row.original.ticket_type.name}</Badge>;
+  //     return <Badge variant="tertiary">{row.original.ticket_type_name}</Badge>;
   //   },
   // },
   {

@@ -15,9 +15,9 @@ export const useBookmarkStore = create<BookmarkStore>()(
         set((state) => ({
           bookmarks: [...state.bookmarks, bookmark],
         })),
-      removeFromBookmarks: (bookmark) =>
+      removeFromBookmarks: (eventID: string) =>
         set((state) => ({
-          bookmarks: state.bookmarks.filter((b) => b.id !== bookmark.id),
+          bookmarks: state.bookmarks.filter((b) => b.id !== eventID),
         })),
     }),
     {

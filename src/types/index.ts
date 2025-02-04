@@ -41,7 +41,7 @@ export interface EventsContextType {
 export interface BookmarkStore {
   bookmarks: EventsListingType[];
   addToBookmarks: (data: EventsListingType) => void;
-  removeFromBookmarks: (data: EventsListingType) => void;
+  removeFromBookmarks: (eventID: string) => void;
 }
 
 // --------------------- API RESPONSE TYPES --------------------- //
@@ -82,7 +82,7 @@ export interface Event {
 }
 
 export type EventsListingType = Omit<Event, "user">;
-export type EventDetailsType = Omit<Event, "user"> & { organizer_name: string } & Array<Ticket>;
+export type EventDetailsType = Omit<Event, "user"> & { organizer_name: string } & { tickets: Ticket[] };
 
 // --------------------- TICKETS TYPES --------------------- //
 export interface TicketType {
@@ -92,10 +92,10 @@ export interface TicketType {
 export interface Ticket {
   id: string;
   name: string;
-  quantity: string;
+  quantity: number;
   price: number;
   event: Event;
-  ticket_type: TicketType;
+  ticket_type_name: string;
 }
 
 // --------------------- ORDERS TYPES --------------------- //

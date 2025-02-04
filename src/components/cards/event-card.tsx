@@ -17,18 +17,20 @@ export default function EventCard({ event }: Props) {
   const { id, cover, date, time, title, location } = event;
 
   const [isInBookmarks, setIsInBookmarks] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, userData } = useAuth();
   const navigate = useNavigate();
   const { bookmarks, addToBookmarks, removeFromBookmarks } = useBookmarkStore();
 
   const handleBookmark = () => {
     if (isAuthenticated) {
-      if (isInBookmarks) {
-        removeFromBookmarks(event);
-        toast.success("Event removed from bookmarks");
-      } else {
-        addToBookmarks(event);
-        toast.success("Event added to bookmarks");
+      if (userData?.role !== "admin") {
+        if (isInBookmarks) {
+          removeFromBookmarks(id);
+          toast.success("Event removed from bookmarks");
+        } else {
+          addToBookmarks(event);
+          toast.success("Event added to bookmarks");
+        }
       }
     } else {
       navigate(`/${routes.auth.login}`);

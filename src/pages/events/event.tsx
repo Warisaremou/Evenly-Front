@@ -9,22 +9,34 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/contexts/auth/hook";
 import { routes } from "@/lib/routes";
+import { cn } from "@/lib/utils";
 import { useEvent } from "@/services/events/hooks";
 import { eventsKeys } from "@/services/events/keys";
+import { useBookmarkStore } from "@/store/bookmark";
 import { useQueryClient } from "@tanstack/react-query";
-import { Bookmark, CalendarClock, MapPin, Minus, Plus, RefreshCcw, Ticket } from "lucide-react";
+import { Bookmark, CalendarClock, MapPin, Minus, Plus, RefreshCcw, Ticket, Tickets } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 
 export default function Event() {
   const [ticketQuantity, setTicketQuantity] = useState(1);
+  const [selectedTicketID, setSelectedTicketID] = useState<string | null>(null);
+  const [isInBookmarks, setIsInBookmarks] = useState(false);
 
+  const navigate = useNavigate();
   const { id_event } = useParams();
   const queryClient = useQueryClient();
-
+  const { isAuthenticated, userData } = useAuth();
+  const { bookmarks, addToBookmarks, removeFromBookmarks } = useBookmarkStore();
   const { data, isLoading, isError } = useEvent(id_event!);
+
+  useEffect(() => {
+    const bookIndex = bookmarks.findIndex((b) => b.id === id_event);
+    setIsInBookmarks(bookIndex !== -1);
+  }, [bookmarks]);
 
   useEffect(() => {
     if (isError) {
@@ -32,10 +44,45 @@ export default function Event() {
     }
   }, [isError]);
 
+  const handleBookmark = () => {
+    if (isAuthenticated) {
+      if (userData?.role !== "admin") {
+        if (isInBookmarks) {
+          removeFromBookmarks(id_event!);
+          toast.success("Event removed from bookmarks");
+        } else {
+          if (data) {
+            addToBookmarks({
+              id: data.id,
+              title: data.title,
+              description: data.description,
+              cover: data.cover,
+              date: data.date,
+              time: data.time,
+              location: data.location,
+              categories: data.categories,
+            });
+          }
+          toast.success("Event added to bookmarks");
+        }
+      }
+    } else {
+      navigate(`/${routes.auth.login}`);
+    }
+  };
+
   const handleEventDetailsRefetch = () => {
     queryClient.invalidateQueries({
       queryKey: eventsKeys.event(id_event!),
     });
+  };
+
+  const handleTicketSelection = (ticketID: string) => {
+    if (selectedTicketID === ticketID) {
+      setSelectedTicketID(null);
+    } else {
+      setSelectedTicketID(ticketID);
+    }
   };
 
   const handleTicketQuantity = (type: "increment" | "decrement") => {
@@ -55,7 +102,7 @@ export default function Event() {
             <Skeleton className="w-full h-80 rounded-lg aspect-[4/8]" />
             <div className="flex flex-col lg:flex-row gap-20">
               <Skeleton className="h-[28rem] w-full" />
-              <Skeleton className="h-44 w-full max-w-72" />
+              <Skeleton className="h-56 w-full max-w-80" />
             </div>
           </div>
         </>
@@ -128,34 +175,76 @@ export default function Event() {
                 </div>
 
                 {/* Book & Favorites */}
-                <div className="max-w-72 w-full h-fit p-3 bg-grey-100 border border-grey-200 rounded-lg flex flex-col gap-6">
-                  <Button variant="secondary">
-                    <Bookmark size={18} />
-                    Add to favorites
+                <div className="md:max-w-80 w-full h-fit p-3 bg-grey-100 border border-grey-200 rounded-lg flex flex-col gap-6">
+                  <Button
+                    onClick={handleBookmark}
+                    variant="secondary"
+                  >
+                    <Bookmark
+                      size={18}
+                      className={cn("text-primary-300", isInBookmarks && "fill-primary-300")}
+                    />
+                    {isInBookmarks ? "Remove from bookmarks" : "Add to bookmarks"}
                   </Button>
                   <div className="flex flex-col gap-4">
-                    <div className="flex items-center justify-between gap-1.5">
-                      <h3 className="font-body-medium">Quantity</h3>
-                      <div className="flex items-center gap-3.5">
-                        <Button
-                          disabled={ticketQuantity === 1}
-                          size="icon"
-                          onClick={() => handleTicketQuantity("decrement")}
-                        >
-                          <Minus size={18} />
-                        </Button>
-                        <span className="font-body-medium">{ticketQuantity}</span>
-                        <Button
-                          onClick={() => handleTicketQuantity("increment")}
-                          size="icon"
-                        >
-                          <Plus size={18} />
-                        </Button>
-                      </div>
+                    <h3 className="font-heading-semibold text-xl">Available tickets</h3>
+                    <div className="flex flex-col gap-3">
+                      {data.tickets.map((ticket) => {
+                        const isSelected = selectedTicketID === ticket.id;
+
+                        return (
+                          <div
+                            onClick={() => handleTicketSelection(ticket.id)}
+                            key={ticket.id}
+                            className={cn(
+                              "flex gap-4 p-1.5 border rounded-lg items-center justify-between transition-all cursor-pointer ease-in-out",
+                              isSelected ? "bg-primary-100 border-primary-400" : "bg-grey-100 border-grey-300",
+                            )}
+                          >
+                            <div className="flex items-center gap-1.5">
+                              <div className="flex items-center justify-center p-1.5 bg-primary-100 rounded-md size-12">
+                                <Tickets
+                                  size={22}
+                                  className="text-primary-300"
+                                />
+                              </div>
+                              <div>
+                                <p className="font-body-semibold">{ticket.name}</p>
+                                <p className="font-body-medium text-sm text-grey-400">{ticket.ticket_type_name}</p>
+                              </div>
+                            </div>
+                            <p className="font-body-semibold text-primary-300">{ticket.price}</p>
+                          </div>
+                        );
+                      })}
                     </div>
+                    {selectedTicketID && (
+                      <div className="flex items-center justify-between gap-1.5">
+                        <h3 className="font-body-medium">Quantity</h3>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            disabled={ticketQuantity === 1}
+                            size="icon"
+                            onClick={() => handleTicketQuantity("decrement")}
+                          >
+                            <Minus size={18} />
+                          </Button>
+                          <div className="size-10 flex items-center justify-center">
+                            <span className="font-body-medium">{ticketQuantity}</span>
+                          </div>
+                          <Button
+                            disabled={ticketQuantity === 10}
+                            onClick={() => handleTicketQuantity("increment")}
+                            size="icon"
+                          >
+                            <Plus size={18} />
+                          </Button>
+                        </div>
+                      </div>
+                    )}
                     <Button>
                       <Ticket size={18} />
-                      Book ticket
+                      Book tickets
                     </Button>
                   </div>
                 </div>
