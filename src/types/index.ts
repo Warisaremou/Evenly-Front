@@ -32,9 +32,9 @@ export interface AuthContextType {
   userData: User | null;
 }
 
-export interface EventContextType {
-  eventID: string;
-  setEventID: Dispatch<SetStateAction<string>>;
+export interface EventsContextType {
+  events: EventsListingType[];
+  isLoading: boolean;
 }
 
 // --------------------- STORES TYPES --------------------- //

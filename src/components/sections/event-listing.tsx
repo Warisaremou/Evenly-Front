@@ -1,10 +1,8 @@
 import { EventCard } from "@/components/cards";
 import { EventCardLoader } from "@/components/loaders";
+import { useEventsList } from "@/contexts/events/hook";
 import { routes } from "@/lib/routes";
-import { useEvents } from "@/services/events/hooks";
-import { useEffect } from "react";
 import { Link } from "react-router";
-import { toast } from "sonner";
 
 type Props = {
   sectionTitle: string;
@@ -12,13 +10,7 @@ type Props = {
 };
 
 export default function EventListing({ sectionTitle, withCTA = false }: Props) {
-  const { isLoading, data, isError } = useEvents();
-
-  useEffect(() => {
-    if (isError) {
-      toast.error("Failed to fetch events");
-    }
-  }, [isError]);
+  const { events, isLoading } = useEventsList();
 
   return (
     <div className="space-y-6">
@@ -39,8 +31,8 @@ export default function EventListing({ sectionTitle, withCTA = false }: Props) {
           Array.from({ length: 3 }).map((_, i) => <EventCardLoader key={i} />)
         ) : (
           <>
-            {data &&
-              data.map((event) => (
+            {events &&
+              events.slice(0, 2).map((event) => (
                 <EventCard
                   key={event.id}
                   event={event}
