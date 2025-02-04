@@ -1,15 +1,20 @@
-// import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Ticket } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 
 export const ticketsColumns: ColumnDef<Ticket>[] = [
-  // {
-  //   accessorKey: "ticket_type_name",
-  //   header: "Type",
-  //   cell: ({ row }) => {
-  //     return <Badge variant="tertiary">{row.original.ticket_type_name}</Badge>;
-  //   },
-  // },
+  {
+    accessorKey: "ticket_type_name",
+    header: "Type",
+    cell: ({ row }) => (
+      <Badge
+        className="text-xs"
+        variant="tertiary"
+      >
+        {row.original.ticket_type_name}
+      </Badge>
+    ),
+  },
   {
     accessorKey: "name",
     header: "Name",

@@ -8,7 +8,7 @@ import { ApiResponse, Ticket, TicketType } from "@/types";
  * @returns Promise<Ticket[]> - List of organizer tickets
  */
 export const getOrganizerTickets = async (): Promise<Ticket[]> => {
-  const response = await api.get("/tickets").then((res) => res);
+  const response = await api.get("/tickets/organizer/tickets").then((res) => res);
   return response.data;
 };
 

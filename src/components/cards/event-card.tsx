@@ -23,7 +23,7 @@ export default function EventCard({ event }: Props) {
 
   const handleBookmark = () => {
     if (isAuthenticated) {
-      if (userData?.role !== "admin") {
+      if (userData?.role !== "organizer") {
         if (isInBookmarks) {
           removeFromBookmarks(id);
           toast.success("Event removed from bookmarks");
