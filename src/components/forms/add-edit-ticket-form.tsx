@@ -40,8 +40,6 @@ export default function AddEditTicketForm({ id_event, onToogleDialog }: Props) {
   });
 
   const onSubmit = (data: CreateAndUpdateTicket) => {
-    // console.log(data);
-    // return;
     mutateAsync(data, {
       onSuccess: (response) => {
         toast.success(response.message ?? "Ticket added successfully");

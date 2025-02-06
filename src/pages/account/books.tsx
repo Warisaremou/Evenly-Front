@@ -34,13 +34,15 @@ export default function AccountBooks() {
         <>
           {data && data.length > 0 ? (
             <div className="flex flex-col gap-8 lg:gap-5">
-              {data.map((reservation) => (
-                <BookedEventCard
-                  key={reservation.id}
-                  reservation={reservation}
-                  ticket_number={1}
-                />
-              ))}
+              {data
+                .filter((reservation) => !reservation.is_canceled)
+                .map((reservation) => (
+                  <BookedEventCard
+                    key={reservation.id}
+                    reservation={reservation}
+                    ticket_number={1}
+                  />
+                ))}
             </div>
           ) : (
             <NoDataFoundCard

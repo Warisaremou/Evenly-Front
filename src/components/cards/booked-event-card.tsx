@@ -1,5 +1,11 @@
+import { useCancelOrder } from "@/services/orders/hooks";
+import { ordersKeys } from "@/services/orders/keys";
 import { UserReservation } from "@/types";
+import { useQueryClient } from "@tanstack/react-query";
 import { CalendarClock, MapPin, Ticket } from "lucide-react";
+import { toast } from "sonner";
+import { Loader } from "../loaders";
+import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 
 export default function BookedEventCard({
@@ -9,7 +15,23 @@ export default function BookedEventCard({
   reservation: UserReservation;
   ticket_number: number;
 }) {
-  const { cover, event_date, event_location, event_time, event_title } = reservation;
+  const { cover, event_date, event_location, event_time, event_title, is_canceled } = reservation;
+  const { mutateAsync, isPending } = useCancelOrder();
+  const queryClient = useQueryClient();
+
+  const handleCancelReservation = async () => {
+    await mutateAsync(reservation.id, {
+      onSuccess: (data) => {
+        toast.success(data.message ?? "Reservation canceled successfully");
+        queryClient.invalidateQueries({
+          queryKey: ordersKeys.userReservations,
+        });
+      },
+      onError: (error) => {
+        toast.error(error.message ?? "Failed to cancel reservation");
+      },
+    });
+  };
 
   return (
     <div className="flex max-lg:flex-col lg:items-center group gap-6">
@@ -40,12 +62,19 @@ export default function BookedEventCard({
             <span className="text-sm font-body-medium">{ticket_number} Tickets</span>
           </div>
         </div>
-        <Button
-          variant="destructive"
-          className="max-lg:w-full"
-        >
-          Cancel reservation
-        </Button>
+        {is_canceled ? (
+          <Badge variant="destructive">Canceled</Badge>
+        ) : (
+          <Button
+            variant="destructive"
+            className="max-lg:w-full"
+            disabled={isPending}
+            onClick={handleCancelReservation}
+          >
+            {isPending && <Loader className="text-state-error-foreground" />}
+            Cancel reservation
+          </Button>
+        )}
       </div>
     </div>
   );
