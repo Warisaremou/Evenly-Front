@@ -1,9 +1,15 @@
-import { OrdersListingType } from "@/types";
+import { UserReservation } from "@/types";
 import { CalendarClock, MapPin, Ticket } from "lucide-react";
 import { Button } from "../ui/button";
 
-export default function BookedEventCard(reservation: OrdersListingType) {
-  const { cover, event_date, event_location, event_time, event_title } = reservation.order;
+export default function BookedEventCard({
+  reservation,
+  ticket_number,
+}: {
+  reservation: UserReservation;
+  ticket_number: number;
+}) {
+  const { cover, event_date, event_location, event_time, event_title } = reservation;
 
   return (
     <div className="flex max-lg:flex-col lg:items-center group gap-6">
@@ -31,7 +37,7 @@ export default function BookedEventCard(reservation: OrdersListingType) {
           </div>
           <div className="flex items-center gap-2">
             <Ticket size={18} />
-            <span className="text-sm font-body-medium">{reservation.ticket_number} Tickets</span>
+            <span className="text-sm font-body-medium">{ticket_number} Tickets</span>
           </div>
         </div>
         <Button
