@@ -125,8 +125,7 @@ export default function AddEditTicketForm({ id_event, onToogleDialog }: Props) {
             name="quantity"
             render={({ field }) => (
               <FormItem>
-                Available quantity
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Available quantity</FormLabel>
                 <FormControl>
                   <Input
                     type="number"

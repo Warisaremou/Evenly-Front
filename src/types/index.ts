@@ -107,6 +107,28 @@ export interface Order {
   is_expired: boolean;
 }
 
+export interface UserReservation {
+  id: string;
+  cover: string;
+  user_id: string;
+  ticket_id: string;
+  event_title: string;
+  event_date: Date;
+  event_time: string;
+  event_location: string;
+  is_canceled: boolean;
+}
+
+export interface BookTicketPayload {
+  ticket_id: string;
+  quantity: number;
+}
+
+export type OrdersListingType = {
+  order: UserReservation;
+  ticket_number: number;
+};
+
 // --------------------- CATEGORIES TYPES --------------------- //
 export interface Category {
   id: string;
