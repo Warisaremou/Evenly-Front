@@ -1,10 +1,10 @@
 import api from "@/lib/axios-instance";
-import { ApiResponse, BookTicketPayload, Order, UserReservation } from "@/types";
+import { ApiResponse, BookTicketPayload, OrdersListingType, UserReservation } from "@/types";
 
 /**
  * Query to get user reservations
  *
- * @returns Promise<OrdersListingType[]> - List of bookings
+ * @returns Promise<UserReservation[]> - List of bookings
  */
 export const getUserReservations = async (): Promise<UserReservation[]> => {
   const response = await api.get("/orders/user/reservations").then((res) => res);
@@ -16,9 +16,9 @@ export const getUserReservations = async (): Promise<UserReservation[]> => {
  *
  * @returns Promise<OrdersListingType[]> - List of orders
  */
-export const getOrganizerTicketsOrders = async (): Promise<Order[]> => {
+export const getOrganizerTicketsOrders = async (): Promise<OrdersListingType[]> => {
   const response = await api.get("/orders/events_order").then((res) => res);
-  return response.data;
+  return response.data[0];
 };
 
 /**

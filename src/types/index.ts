@@ -119,15 +119,23 @@ export interface UserReservation {
   is_canceled: boolean;
 }
 
+export interface OrdersListingType {
+  id: string;
+  event_title: string;
+  user_email: string;
+  is_canceled: boolean;
+  ordered_at: Date;
+}
+
 export interface BookTicketPayload {
   ticket_id: string;
   quantity: number;
 }
 
-export type OrdersListingType = {
-  order: UserReservation;
-  ticket_number: number;
-};
+// export type OrdersListingType = {
+//   order: UserReservation;
+//   ticket_number: number;
+// };
 
 // --------------------- CATEGORIES TYPES --------------------- //
 export interface Category {
