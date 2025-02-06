@@ -4,15 +4,16 @@ import { Button } from "@/components/ui/button";
 import { useLocalStorage } from "@/hooks/use-localstorage";
 import { useLogout } from "@/services/auth/hooks";
 import { LogOut } from "lucide-react";
+import React from "react";
 import { toast } from "sonner";
 
 export default function LogoutButton() {
   const { removeItem } = useLocalStorage();
-  const { mutateAsync, isPending } = useLogout();
+  const { mutate, isPending } = useLogout();
 
-  const handleLogout = async () => {
-    await mutateAsync("nope", {
-      onSuccess: (response) => {
+  const handleLogout = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    mutate("nope", {
+      onSuccess: async (response) => {
         removeItem("accessToken");
         toast.success(response.message ?? "Logged out successfully");
         window.location.reload();
@@ -21,6 +22,8 @@ export default function LogoutButton() {
         toast.error("Failed to logout");
       },
     });
+
+    e.preventDefault();
   };
 
   return (
@@ -28,7 +31,7 @@ export default function LogoutButton() {
       variant="destructive-secondary"
       className="w-full justify-start"
       disabled={isPending}
-      onClick={handleLogout}
+      onClick={(e) => handleLogout(e)}
     >
       <LogOut
         className="size-4"
