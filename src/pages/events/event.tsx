@@ -1,3 +1,5 @@
+import { OrderConfirmIcon } from "@/assets/icons/order-confirm";
+import { Loader } from "@/components/loaders";
 import { Badge } from "@/components/ui/badge";
 import {
   Breadcrumb,
@@ -8,12 +10,15 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/contexts/auth/hook";
 import { routes } from "@/lib/routes";
 import { cn, formatPrice } from "@/lib/utils";
 import { useEvent } from "@/services/events/hooks";
 import { eventsKeys } from "@/services/events/keys";
+import { useBookTicket } from "@/services/orders/hooks";
+import { ordersKeys } from "@/services/orders/keys";
 import { useBookmarkStore } from "@/store/bookmark";
 import { useQueryClient } from "@tanstack/react-query";
 import { Bookmark, CalendarClock, MapPin, Minus, Plus, RefreshCcw, Ticket, Tickets } from "lucide-react";
@@ -25,6 +30,7 @@ export default function Event() {
   const [ticketQuantity, setTicketQuantity] = useState(1);
   const [selectedTicketID, setSelectedTicketID] = useState<string | null>(null);
   const [isInBookmarks, setIsInBookmarks] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
   const { id_event } = useParams();
@@ -32,6 +38,7 @@ export default function Event() {
   const { isAuthenticated, userData } = useAuth();
   const { bookmarks, addToBookmarks, removeFromBookmarks } = useBookmarkStore();
   const { data, isLoading, isError } = useEvent(id_event!);
+  const { mutateAsync, isPending } = useBookTicket();
 
   useEffect(() => {
     const bookIndex = bookmarks.findIndex((b) => b.id === id_event);
@@ -93,8 +100,53 @@ export default function Event() {
     }
   };
 
+  const handleBookTickets = async () => {
+    // console.log(selectedTicketID, ticketQuantity);
+    // return;
+    await mutateAsync(
+      {
+        ticket_id: selectedTicketID!,
+        quantity: ticketQuantity,
+      },
+      {
+        onSuccess: () => {
+          setShowModal(true);
+          queryClient.invalidateQueries({
+            queryKey: ordersKeys.userReservations,
+          });
+        },
+        onError: () => {
+          toast.error("Failed to book tickets");
+        },
+      },
+    );
+  };
+
   return (
     <div className="space-y-4">
+      {/* Order confirmation modal */}
+      <Dialog
+        open={showModal}
+        onOpenChange={setShowModal}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex justify-center">
+              <div className="flex items-center justify-center size-11 rounded-full p-1.5 bg-primary-100">
+                <OrderConfirmIcon />
+              </div>
+            </DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col items-center gap-1">
+            <h3 className="font-body-semibold">Good !</h3>
+            <p className="text-sm text-center text-grey-500">
+              Your reservation for <span className="font-body-semibold">{data?.title}</span> has been made. An email
+              will be sent to you with the downloadable ticket(s)
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {isLoading ? (
         <>
           <Skeleton className="h-10 w-64" />
@@ -233,7 +285,7 @@ export default function Event() {
                             <span className="font-body-medium">{ticketQuantity}</span>
                           </div>
                           <Button
-                            disabled={ticketQuantity === 10}
+                            disabled={ticketQuantity === 5}
                             onClick={() => handleTicketQuantity("increment")}
                             size="icon"
                           >
@@ -242,8 +294,11 @@ export default function Event() {
                         </div>
                       </div>
                     )}
-                    <Button>
-                      <Ticket size={18} />
+                    <Button
+                      disabled={!selectedTicketID || isPending}
+                      onClick={handleBookTickets}
+                    >
+                      {isPending ? <Loader className="text-grey-100" /> : <Ticket size={18} />}
                       Book tickets
                     </Button>
                   </div>
