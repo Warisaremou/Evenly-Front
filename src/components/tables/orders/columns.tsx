@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { OrdersListingType } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 
 export const ordersColumns: ColumnDef<OrdersListingType>[] = [
   {
@@ -35,16 +36,8 @@ export const ordersColumns: ColumnDef<OrdersListingType>[] = [
   {
     accessorKey: "ordered_at",
     header: "Ordered at",
-    // cell: ({ row }) => {
-    //   const isCanceled = row.original.is_canceled;
-    //   return (
-    //     <Badge
-    //       className="text-xs"
-    //       variant={isCanceled ? "destructive" : "default"}
-    //     >
-    //       {isCanceled ? "Canceled" : "Approuved"}
-    //     </Badge>
-    //   );
-    // },
+    cell: ({ row }) => (
+      <span className="text-sm font-body-medium">{format(row.original.ordered_at, "MM/dd/yyyy")}</span>
+    ),
   },
 ];
