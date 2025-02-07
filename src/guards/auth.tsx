@@ -1,7 +1,7 @@
 import Loader from "@/components/loaders/loader";
 import { useAuth } from "@/contexts/auth/hook";
 import { routes } from "@/lib/routes";
-import { Outlet, useLocation, useNavigate } from "react-router";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router";
 
 export default function AuthGuard() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -22,9 +22,12 @@ export default function AuthGuard() {
     navigate(-1);
   }
 
-  // if (!isAuthenticated && !isAuthPage) {
-  //   return <Navigate to={routes.auth.login} />;
-  // }
+  if (!isAuthenticated) {
+    if (location.pathname === `/${routes.auth.login}` || location.pathname === `/${routes.auth.register}`) {
+      return <Outlet />;
+    }
+    return <Navigate to={routes.auth.login} />;
+  }
 
   return <Outlet />;
 }
