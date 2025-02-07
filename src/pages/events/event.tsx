@@ -101,8 +101,6 @@ export default function Event() {
   };
 
   const handleBookTickets = async () => {
-    // console.log(selectedTicketID, ticketQuantity);
-    // return;
     await mutateAsync(
       {
         ticket_id: selectedTicketID!,
