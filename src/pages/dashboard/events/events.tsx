@@ -1,7 +1,5 @@
 import { NoDataFoundCard } from "@/components/cards";
-import CategoriesSelection from "@/components/categories-selection";
 import Loader from "@/components/loaders/loader";
-import { Searchbar } from "@/components/searchbar";
 import { eventsColumns } from "@/components/tables/events/columns";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
@@ -31,13 +29,13 @@ export default function DashboardEvents() {
       </div>
 
       <div className="flex flex-col gap-5">
-        <div className="flex items-center justify-between gap-2">
+        {/* <div className="flex items-center justify-between gap-2">
           <Searchbar
             placeholder="Search event"
             className="max-w-72"
           />
           <CategoriesSelection className="max-w-52" />
-        </div>
+        </div> */}
 
         {isLoading ? (
           <div className="flex justify-center items-center py-10">

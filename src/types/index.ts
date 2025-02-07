@@ -22,6 +22,7 @@ export type MainNavItem = NavItemWithOptionalChildren;
 export type searchParamsType = {
   place: string;
   category: string;
+  search?: string;
 };
 
 // --------------------- CONTEXTS TYPES --------------------- //

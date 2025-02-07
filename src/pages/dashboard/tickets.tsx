@@ -1,9 +1,7 @@
 import { NoDataFoundCard } from "@/components/cards";
 import Loader from "@/components/loaders/loader";
-import { Searchbar } from "@/components/searchbar";
 import { ticketsColumns } from "@/components/tables/tickets/columns";
 import { DataTable } from "@/components/ui/data-table";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useOrganizerTickets } from "@/services/tickets/hooks";
 import { Inbox } from "lucide-react";
 import { useEffect } from "react";
@@ -23,7 +21,7 @@ export default function DashboardTickets() {
       <h3 className="section-header-title">Tickets</h3>
 
       <div className="flex flex-col gap-5">
-        <div className="flex items-center justify-between gap-2">
+        {/* <div className="flex items-center justify-between gap-2">
           <Searchbar
             placeholder="Search event"
             className="max-w-72"
@@ -37,7 +35,7 @@ export default function DashboardTickets() {
               <SelectItem value="festival">Festival</SelectItem>
             </SelectContent>
           </Select>
-        </div>
+        </div> */}
 
         {isLoading ? (
           <div className="flex justify-center items-center py-10">
