@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { formatPrice } from "@/lib/utils";
 import { Ticket } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -27,9 +28,8 @@ export const ticketsColumns: ColumnDef<Ticket>[] = [
     accessorKey: "price",
     header: "Price",
     cell: ({ row }) => {
-      // TODO: Format price to €
       const price: number = row.getValue("price");
-      return <span>{price > 0 ? price : "-"}</span>;
+      return <span>{price > 0 ? formatPrice(price) : "-"}</span>;
     },
   },
 ];

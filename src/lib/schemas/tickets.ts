@@ -13,54 +13,14 @@ export const createAndUpdateTicketSchema = z
         message: "Ticket name must have at most 15 characters",
       })
       .trim(),
-    quantity: z.preprocess(
-      (a) =>
-        parseInt(
-          z
-            .string({
-              invalid_type_error: "Ticket quantity is required and must be a number",
-            })
-            .parse(a),
-          10,
-        ),
-      z
-        .number({
-          invalid_type_error: "Ticket quantity is required",
-        })
-        .positive({
-          message: "Ticket quantity must be positive and greater than 0",
-        })
-        .min(1, {
-          message: "minimum quantity is 1",
-        }),
-      {
-        required_error: "quantity is required",
-      },
-    ),
-    price: z.preprocess(
-      (a) =>
-        parseInt(
-          z
-            .string({
-              invalid_type_error: "Ticket price is required and must be a number",
-            })
-            .parse(a),
-          10,
-        ),
-      z
-        .number({
-          invalid_type_error: "Ticket price is required",
-        })
-        .positive({
-          message: "Ticket price must be positive and greater than 0",
-        })
-        .min(1, {
-          message: "minimum price is 1",
-        }),
-      {
-        required_error: "price is required",
-      },
-    ),
+    quantity: z
+      .string()
+      .min(1, "Quantity must be at least 1")
+      .transform((value) => Number(value)),
+    price: z
+      .string()
+      .min(0, "Price must be at least 0")
+      .transform((value) => Number(value)),
     event_id: z.string({
       required_error: "Event id is required",
     }),

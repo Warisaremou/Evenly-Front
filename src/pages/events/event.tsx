@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/contexts/auth/hook";
 import { routes } from "@/lib/routes";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import { useEvent } from "@/services/events/hooks";
 import { eventsKeys } from "@/services/events/keys";
 import { useBookmarkStore } from "@/store/bookmark";
@@ -213,7 +213,7 @@ export default function Event() {
                                 <p className="font-body-medium text-sm text-grey-400">{ticket.ticket_type_name}</p>
                               </div>
                             </div>
-                            <p className="font-body-semibold text-primary-300">{ticket.price}</p>
+                            <p className="font-body-semibold text-primary-300">{formatPrice(ticket.price)}</p>
                           </div>
                         );
                       })}
