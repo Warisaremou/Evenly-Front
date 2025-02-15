@@ -17,6 +17,7 @@ const buttonVariants = cva(
         "tertiary-outline":
           "text-grey-500 bg-grey-100 border border-grey-300 hover:border-primary-200 focus-visible:ring-grey-300",
         ghost: "text-grey-500 bg-grey-100 hover:bg-grey-300 focus-visible:ring-grey-300",
+        "ghost-icon": "text-grey-500 bg-transparent focus-visible:ring-grey-100",
       },
       size: {
         default: "h-10 px-4 py-2.5",
