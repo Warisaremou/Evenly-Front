@@ -43,10 +43,10 @@ export default function DashboardEvents() {
           </div>
         ) : (
           <>
-            {data && data.length > 0 ? (
+            {data && data[0].length > 0 ? (
               <DataTable
                 columns={eventsColumns}
-                data={data}
+                data={data[0]}
               />
             ) : (
               <NoDataFoundCard
