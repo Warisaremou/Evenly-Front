@@ -12,7 +12,7 @@ export default function LogoutButton() {
   const { mutate, isPending } = useLogout();
 
   const handleLogout = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    mutate("nope", {
+    mutate("", {
       onSuccess: async (response) => {
         removeItem("accessToken");
         toast.success(response.message ?? "Logged out successfully");

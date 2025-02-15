@@ -39,6 +39,6 @@ export const useLogout = () => {
   return useMutation({
     mutationKey: authKeys.logOut,
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-    mutationFn: (data: string) => logOut(),
+    mutationFn: (_data: string) => logOut(),
   });
 };
