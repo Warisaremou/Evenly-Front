@@ -1,0 +1,37 @@
+# Build Stage
+FROM node:22-alpine AS build
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the package.json and package-lock.json
+COPY package*.json ./
+
+# Set the environment variables
+ARG VITE_API_BASE_URL
+ARG VITE_GOOGLE_MAPS_API_KEY
+ENV VITE_API_BASE_URL $VITE_API_BASE_URL
+ENV VITE_GOOGLE_MAPS_API_KEY $VITE_GOOGLE_MAPS_API_KEY
+
+# Install the dependencies
+RUN npm install
+
+# Copy the rest of the files
+COPY . .
+
+# Build the app
+RUN npm run build
+
+# Production Stage (To optimize the image size and enhance security)
+# Use the official Nginx image
+FROM nginx:stable-alpine AS production
+
+# Copy the build files to the Nginx server
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf  /etc/nginx/conf.d
+
+# Expose the port
+EXPOSE 5173
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]

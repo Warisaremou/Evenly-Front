@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  evenly-prod:
+    image: evenly-frontend-prod
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      args:
+        - VITE_API_BASE_URL=${VITE_API_BASE_URL}
+        - VITE_GOOGLE_MAPS_API_KEY=${VITE_GOOGLE_MAPS_API_KEY}
+    ports:
+      - "5173:5173"
+    restart: always
