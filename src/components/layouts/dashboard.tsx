@@ -10,9 +10,9 @@ export default function DashboardLayout() {
   const { userData } = useAuth();
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen overflow-y-hidden">
       {/* Sidebar */}
-      <DesktopSidebar className="max-lg:hidden w-60 py-6 px-3.5 border-r border-grey-300" />
+      <DesktopSidebar className="max-lg:hidden w-64 py-6 px-3.5 border-r border-grey-300" />
 
       <div className="h-screen flex-1 overflow-y-scroll">
         {/* Header */}
@@ -32,7 +32,7 @@ export default function DashboardLayout() {
         <MobileSidebar ref={sheetTriggerRef} />
 
         {/* Children */}
-        <div className="w-full mx-auto max-w-[50rem] max-lg:container max-lg:py-5 py-8">
+        <div className="w-full mx-auto max-w-[70rem] max-lg:container max-lg:p-5 p-8">
           <Outlet />
         </div>
       </div>

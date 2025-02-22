@@ -32,7 +32,7 @@ export default function EventListing({ sectionTitle, withCTA = false }: Props) {
         ) : (
           <>
             {events &&
-              events.slice(0, 2).map((event) => (
+              events.slice(0, 3).map((event) => (
                 <EventCard
                   key={event.id}
                   event={event}
