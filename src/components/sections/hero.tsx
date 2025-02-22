@@ -22,7 +22,7 @@ export default function HeroSection() {
   };
 
   return (
-    <div className="h-64 md:h-96 rounded-3xl bg-[url(src/assets/images/hero-bg.avif)] relative bg-center bg-cover p-5 flex items-center justify-center">
+    <div className="h-64 md:h-96 rounded-3xl bg-hero relative bg-center bg-cover p-5 flex items-center justify-center">
       <div className="overlay" />
       <h1 className="max-md:text-3xl heading1 text-grey-100 z-10 text-center">
         Discover & Book Amazing Events Near You!

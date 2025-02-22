@@ -72,7 +72,7 @@ export default {
         "heading-bold": ["bricolage-grotesque-semibold", ...fontFamily.sans],
       },
       backgroundImage: {
-        "hero-background": "url('src/assets/images/hero-bg.avif')",
+        hero: "url('src/assets/images/hero-bg.avif')",
       },
       boxShadow: {
         "3xl": "4px 4px 4px 0px rgba(195, 195, 195, 0.25)",
