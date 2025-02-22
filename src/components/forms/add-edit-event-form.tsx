@@ -1,16 +1,20 @@
 import Imageupload from "@/components/image-upload";
+import Loader from "@/components/loaders/loader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { routes } from "@/lib/routes";
 import { CreateAndUpdateEvent, createAndUpdateEventSchema } from "@/lib/schemas/events";
 import { cn } from "@/lib/utils";
 import { useCategories } from "@/services/categories/hooks";
-import { useAddEvent } from "@/services/events/hooks";
+import { useAddEvent, useUpdateEvent } from "@/services/events/hooks";
 import { eventsKeys } from "@/services/events/keys";
+import { EventDetailsType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -19,14 +23,18 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
-import Loader from "../loaders/loader";
-import { Calendar } from "../ui/calendar";
-import { Skeleton } from "../ui/skeleton";
 
-export default function AddEditEventForm() {
+export default function AddEditEventForm({
+  id_event,
+  eventDetails,
+}: {
+  id_event: string;
+  eventDetails?: EventDetailsType;
+}) {
   const navigate = useNavigate();
   const { data: categoriesList, isLoading, isSuccess } = useCategories();
-  const { mutateAsync, isPending } = useAddEvent();
+  const { mutateAsync: AddNewEvent, isPending: isAddingEvent } = useAddEvent();
+  const { mutateAsync: UpdateEvent, isPending: isUpdating } = useUpdateEvent(id_event);
   const queryClient = useQueryClient();
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -57,31 +65,64 @@ export default function AddEditEventForm() {
     form.setValue("categories", selectedCategories);
   }, [selectedCategories, form]);
 
-  const onSubmit = async (data: CreateAndUpdateEvent) => {
-    if (data.cover == null) {
+  useEffect(() => {
+    if (eventDetails) {
+      const defaultCategories = eventDetails.categories.map((category) => category.id);
+      form.reset({
+        title: eventDetails.title,
+        description: eventDetails.description,
+        location: eventDetails.location,
+        date: new Date(eventDetails.date),
+        time: eventDetails.time.slice(0, 5),
+        categories: defaultCategories,
+      });
+      setSelectedCategories(defaultCategories);
+    }
+  }, [eventDetails]);
+
+  const onSubmit = async (payload: CreateAndUpdateEvent) => {
+    if (!id_event && payload.cover == null) {
       return form.setError("cover", {
         type: "manual",
         message: "Please upload an image",
       });
     }
 
-    await mutateAsync(data, {
-      onSuccess: (response) => {
-        toast.success(response.message ?? "Event added successfully");
-        queryClient.invalidateQueries({
-          queryKey: eventsKeys.organizerEvents,
-        });
+    if (eventDetails) {
+      await UpdateEvent(payload, {
+        onSuccess: (response) => {
+          toast.success(response.message ?? "Event updated successfully");
+          queryClient.invalidateQueries({
+            queryKey: eventsKeys.event(eventDetails.id),
+          });
 
-        setTimeout(() => {
-          // Redirect to the add tickets page with the event ID sended from the backend
-          navigate(`/dashboard/events/${response.data.id}/add-tickets`);
-        }, 1000);
-      },
-      onError: () => {
-        // toast.error(error.message);
-        toast.error("Failed to add event");
-      },
-    });
+          setTimeout(() => {
+            navigate(`/dashboard/${routes.dashboard.events.index}`);
+          }, 1000);
+        },
+        onError: () => {
+          toast.error("Failed to update event");
+        },
+      });
+    } else {
+      await AddNewEvent(payload, {
+        onSuccess: (response) => {
+          toast.success(response.message ?? "Event added successfully");
+          queryClient.invalidateQueries({
+            queryKey: eventsKeys.organizerEvents,
+          });
+
+          setTimeout(() => {
+            // Redirect to the add tickets page with the event ID sended from the backend
+            navigate(`/dashboard/events/${response.data.id}/add-tickets`);
+          }, 1000);
+        },
+        onError: () => {
+          // toast.error(error.message);
+          toast.error("Failed to add event");
+        },
+      });
+    }
   };
 
   return (
@@ -99,12 +140,13 @@ export default function AddEditEventForm() {
               <FormItem>
                 <FormControl>
                   <Imageupload
+                    defaultImageURL={eventDetails?.cover}
                     maxSize={2}
                     accept="image/png, image/jpeg, image/jpg"
                     onUpload={(file) => {
                       field.onChange(file);
                     }}
-                    disabled={isPending}
+                    disabled={isAddingEvent || isUpdating}
                   />
                 </FormControl>
                 <FormMessage />
@@ -180,7 +222,7 @@ export default function AddEditEventForm() {
                   <Textarea
                     id="description"
                     placeholder="Event description"
-                    rows={5}
+                    rows={7}
                     className="resize-none"
                     {...field}
                   />
@@ -227,7 +269,10 @@ export default function AddEditEventForm() {
                     <FormControl>
                       <Button
                         variant="tertiary-outline"
-                        className={cn("w-[240px] pl-3 text-left font-normal", !field.value && "text-muted-foreground")}
+                        className={cn(
+                          "w-[17.5rem] pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground",
+                        )}
                       >
                         {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
@@ -273,7 +318,7 @@ export default function AddEditEventForm() {
 
         <div className="flex gap-2.5 justify-end">
           <Button
-            disabled={isPending}
+            disabled={isAddingEvent || isUpdating}
             variant="secondary"
             onClick={(e) => {
               e.preventDefault();
@@ -284,11 +329,11 @@ export default function AddEditEventForm() {
           </Button>
           <Button
             type="submit"
-            disabled={isPending}
+            disabled={isAddingEvent || isUpdating}
           >
-            {isPending && <Loader className="text-grey-100" />}
-            Add event
-            <span className="sr-only"> Add event</span>
+            {(isAddingEvent || isUpdating) && <Loader className="text-grey-100" />}
+            {id_event ? "Update event" : "Add event"}
+            <span className="sr-only">{id_event ? "Update event" : "Add event"}</span>
           </Button>
         </div>
       </form>
