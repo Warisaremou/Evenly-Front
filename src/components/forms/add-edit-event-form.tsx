@@ -28,13 +28,13 @@ export default function AddEditEventForm({
   id_event,
   eventDetails,
 }: {
-  id_event: string;
+  id_event?: string;
   eventDetails?: EventDetailsType;
 }) {
   const navigate = useNavigate();
   const { data: categoriesList, isLoading, isSuccess } = useCategories();
   const { mutateAsync: AddNewEvent, isPending: isAddingEvent } = useAddEvent();
-  const { mutateAsync: UpdateEvent, isPending: isUpdating } = useUpdateEvent(id_event);
+  const { mutateAsync: UpdateEvent, isPending: isUpdating } = useUpdateEvent(id_event!);
   const queryClient = useQueryClient();
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
