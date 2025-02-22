@@ -172,7 +172,7 @@ export default function AddEditTicketForm({ id_event, onToogleDialog }: Props) {
             type="submit"
             disabled={isPending}
           >
-            {isPending && <Loader />}
+            {isPending && <Loader className="text-grey-100" />}
             Add ticket
             <span className="sr-only"> Add ticket</span>
           </Button>

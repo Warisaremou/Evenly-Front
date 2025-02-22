@@ -70,8 +70,25 @@ export const addEvent = async (event: CreateAndUpdateEvent): Promise<ApiResponse
  * @param {Event} event - Event data
  * @returns Promise<ApiResponse> - Api response
  */
-export const updateEvent = async (id: string, event: Event): Promise<ApiResponse> => {
-  const response = await api.put(`/events/${id}`, event).then((res) => res);
+export const updateEvent = async (id: string, event: CreateAndUpdateEvent): Promise<ApiResponse> => {
+  const form = new FormData();
+
+  if (event.cover) form.append("cover", event.cover);
+  form.append("title", event.title);
+  form.append("description", event.description);
+  event.categories.map((id) => form.append("categories[]", id));
+  form.append("location", event.location);
+  form.append("date", format(event.date, "yyyy-MM-dd"));
+  form.append("time", event.time);
+  form.append("_method", "PUT");
+
+  const response = await api
+    .post(`/events/${id}`, form, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res) => res);
   return response.data;
 };
 
