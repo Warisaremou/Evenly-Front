@@ -56,15 +56,17 @@ export default function DashboardAddTickets() {
       ) : (
         <>
           {data && data.length > 0 ? (
-            <div className="space-y-5">
-              <div className="flex items-center gap-2 justify-between">
-                <h3 className="section-header-title">Tickets</h3>
-                <Button onClick={() => ToogleDialog()}>Add ticket</Button>
+            <div className="space-y-12">
+              <div className="flex flex-col gap-5">
+                <div className="flex items-center gap-2 justify-between">
+                  <h3 className="section-header-title">Tickets</h3>
+                  <Button onClick={() => ToogleDialog()}>Add ticket</Button>
+                </div>
+                <DataTable
+                  columns={ticketsColumns}
+                  data={data}
+                />
               </div>
-              <DataTable
-                columns={ticketsColumns}
-                data={data}
-              />
 
               <div className="flex justify-end">
                 <Button

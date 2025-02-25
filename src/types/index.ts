@@ -95,7 +95,7 @@ export interface Ticket {
   name: string;
   quantity: number;
   price: number;
-  event: Event;
+  event_id: string;
   ticket_type_name: string;
 }
 

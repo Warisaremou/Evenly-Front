@@ -42,3 +42,26 @@ export const addTicketToEvent = async (payload: CreateAndUpdateTicket): Promise<
   const response = await api.post("/tickets", payload).then((res) => res);
   return response.data;
 };
+
+/**
+ * Query to update ticket
+ *
+ * @param {string} id - Ticket id
+ * @param {CreateAndUpdateTicket} payload - Ticket data
+ * @returns Promise<ApiResponse> - Api response
+ */
+export const updateTicket = async (id: string, payload: CreateAndUpdateTicket): Promise<ApiResponse> => {
+  const response = await api.patch(`/tickets/${id}`, payload).then((res) => res);
+  return response.data;
+};
+
+/**
+ * Query to remove ticket
+ *
+ * @param {string} id - Ticket id
+ * @returns Promise<ApiResponse> - Api response
+ */
+export const removeTicket = async (id: string): Promise<ApiResponse> => {
+  const response = await api.delete(`/tickets/${id}`).then((res) => res);
+  return response.data;
+};

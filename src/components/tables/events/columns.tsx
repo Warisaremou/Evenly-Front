@@ -53,20 +53,20 @@ export const eventsColumns: ColumnDef<Event>[] = [
           <DropdownMenuContent className="w-40">
             <DropdownMenuItem className="p-0">
               <Button
+                asChild
+                variant="ghost"
+                className="w-full justify-start text-primary-300 hover:bg-primary-100"
+              >
+                <Link to={`/dashboard/${routes.dashboard.events.index}/${eventID}/edit`}>Update</Link>
+              </Button>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="p-0">
+              <Button
                 onClick={() => navigator.clipboard.writeText(eventID)}
                 variant="destructive-secondary"
                 className="w-full justify-start"
               >
                 Cancel
-              </Button>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="p-0">
-              <Button
-                asChild
-                variant="ghost"
-                className="w-full justify-start"
-              >
-                <Link to={`/dashboard/${routes.dashboard.events.index}/${eventID}/edit`}>Update</Link>
               </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
