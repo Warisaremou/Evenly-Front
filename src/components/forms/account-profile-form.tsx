@@ -47,7 +47,6 @@ export default function AccountProfileForm() {
         });
       },
       onError: () => {
-        // toast.error(error.message);
         toast.error("Failed to update profile");
       },
     });

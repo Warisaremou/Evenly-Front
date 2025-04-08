@@ -31,15 +31,14 @@ export default function CategoriesSelection({ className, onChange }: Props) {
           <p className="py-1.5 pl-8 pr-2 text-sm text-grey-400">Loading categories</p>
         ) : (
           <>
-            {data &&
-              data.map((category) => (
-                <SelectItem
-                  key={category.id}
-                  value={category.id}
-                >
-                  {category.name}
-                </SelectItem>
-              ))}
+            {data?.map((category) => (
+              <SelectItem
+                key={category.id}
+                value={category.id}
+              >
+                {category.name}
+              </SelectItem>
+            ))}
           </>
         )}
       </SelectContent>
