@@ -45,7 +45,6 @@ export default function OrganizerProfileForm() {
         });
       },
       onError: () => {
-        // toast.error(error.message);
         toast.error("Failed to update profile");
       },
     });

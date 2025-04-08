@@ -38,6 +38,8 @@ export interface EventsContextType {
   isLoading: boolean;
 }
 
+export type RoleEnum = "admin" | "organizer" | "user";
+
 // --------------------- STORES TYPES --------------------- //
 export interface BookmarkStore {
   bookmarks: EventsListingType[];
@@ -58,7 +60,7 @@ export interface User {
   firstname: string;
   lastname: string;
   organizer_name: string | null;
-  role: "admin" | "organizer" | "user";
+  role: RoleEnum;
 }
 
 export type UpdateProfile = Omit<OrganizerProfile, "email"> | Omit<AccountProfile, "email">;
@@ -66,7 +68,7 @@ export type UpdateProfile = Omit<OrganizerProfile, "email"> | Omit<AccountProfil
 // --------------------- ROLE TYPES --------------------- //
 export interface Role {
   id: string;
-  name: "admin" | "organizer" | "user";
+  name: RoleEnum;
 }
 
 // --------------------- EVENTS TYPES --------------------- //

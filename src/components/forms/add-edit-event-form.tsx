@@ -24,13 +24,12 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
-export default function AddEditEventForm({
-  id_event,
-  eventDetails,
-}: {
+type Props = {
   id_event?: string;
   eventDetails?: EventDetailsType;
-}) {
+};
+
+export default function AddEditEventForm({ id_event, eventDetails }: Props) {
   const navigate = useNavigate();
   const { data: categoriesList, isLoading, isSuccess } = useCategories();
   const { mutateAsync: AddNewEvent, isPending: isAddingEvent } = useAddEvent();
@@ -118,7 +117,6 @@ export default function AddEditEventForm({
           }, 1000);
         },
         onError: () => {
-          // toast.error(error.message);
           toast.error("Failed to add event");
         },
       });

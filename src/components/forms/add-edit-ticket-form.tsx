@@ -49,7 +49,6 @@ export default function AddEditTicketForm({ id_event, onToogleDialog }: Props) {
         onToogleDialog();
       },
       onError: () => {
-        // toast.error(error.message);
         toast.error("Failed to add ticket");
       },
     });
@@ -82,8 +81,7 @@ export default function AddEditTicketForm({ id_event, onToogleDialog }: Props) {
                     {isLoading ? (
                       <p className="py-1.5 pl-8 pr-2 text-sm text-grey-400">Loading ticket types</p>
                     ) : (
-                      data &&
-                      data.map((ticketType) => (
+                      data?.map((ticketType) => (
                         <SelectItem
                           key={ticketType.id}
                           value={ticketType.id}

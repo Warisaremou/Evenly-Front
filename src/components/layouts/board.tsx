@@ -6,6 +6,7 @@ import UserProfileDropdown from "@/components/user-profile-dropdown";
 import { siteConfig } from "@/config/site";
 import { useAuth } from "@/contexts/auth/hook";
 import { routes } from "@/lib/routes";
+import { User } from "@/types";
 import { Link, Outlet } from "react-router";
 
 export default function BoardLayout() {
@@ -30,16 +31,7 @@ export default function BoardLayout() {
           {isLoading ? (
             <Skeleton className="w-32 h-10" />
           ) : isAuthenticated ? (
-            userData?.role === "organizer" ? (
-              <Button
-                variant="secondary"
-                asChild
-              >
-                <Link to={`/dashboard/${routes.dashboard.events.index}`}>Dashboard</Link>
-              </Button>
-            ) : (
-              <UserProfileDropdown userData={userData!} />
-            )
+            displayUserAction(userData)
           ) : (
             <div className="flex gap-2">
               <Button
@@ -74,3 +66,18 @@ export default function BoardLayout() {
     </div>
   );
 }
+
+const displayUserAction = (userData: User | null) => {
+  if (userData?.role === "organizer") {
+    return (
+      <Button
+        variant="secondary"
+        asChild
+      >
+        <Link to={`/dashboard/${routes.dashboard.events.index}`}>Dashboard</Link>
+      </Button>
+    );
+  } else {
+    return <UserProfileDropdown userData={userData!} />;
+  }
+};
