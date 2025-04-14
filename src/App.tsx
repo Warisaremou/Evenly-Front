@@ -124,6 +124,11 @@ export default function App() {
                     path={routes.dashboard.profile.index}
                     element={<DashboardProfile />}
                   />
+                  {/* Dashboard Security Routes */}
+                  <Route
+                    path={routes.dashboard.security.index}
+                    element={<AccountSecurity />}
+                  />
                 </Route>
               </Route>
               <Route

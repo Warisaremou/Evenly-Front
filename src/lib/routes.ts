@@ -33,5 +33,8 @@ export const routes = {
     profile: {
       index: "profile",
     },
+    security: {
+      index: "security",
+    },
   },
 };

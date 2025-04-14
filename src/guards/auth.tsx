@@ -9,7 +9,7 @@ export default function AuthGuard() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isAuthPage = location.pathname.includes(routes.auth.login || routes.auth.register);
+  const isAuthPage = location.pathname === `/${routes.auth.login}` || location.pathname === `/${routes.auth.register}`;
 
   useEffect(() => {
     const redirectAuthenticatedUser = () => {

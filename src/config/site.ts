@@ -59,5 +59,10 @@ export const siteConfig = {
       title: "Profile",
       href: `/dashboard/${routes.dashboard.profile.index}`,
     },
+    {
+      icon: Shield,
+      title: "Security",
+      href: `/dashboard/${routes.dashboard.security.index}`,
+    },
   ] satisfies MainNavItem[],
 };
