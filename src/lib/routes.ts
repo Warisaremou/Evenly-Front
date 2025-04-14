@@ -9,10 +9,12 @@ export const routes = {
     profile: "profile",
     books: "books",
     favorites: "favorites",
+    security: "security",
   },
   auth: {
     login: "login",
     register: "register",
+    validateOtp: "validateOtp/:id_user",
   },
   dashboard: {
     index: "dashboard/",

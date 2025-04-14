@@ -28,12 +28,18 @@ export default function LoginForm() {
   const onSubmit = async (credentials: Login) => {
     await mutateAsync(credentials, {
       onSuccess: (data) => {
-        setItem("accessToken", data.token);
-        toast.success(data.message ?? "Logged in successfully");
-        setTimeout(() => {
-          navigate("/");
-          window.location.reload();
-        }, 1500);
+        const { message, requires_2fa, token, data: userData } = data;
+
+        if (requires_2fa) {
+          navigate(`/validateOtp/${userData.id}`);
+        } else {
+          setItem("accessToken", token);
+          toast.success(message ?? "Logged in successfully");
+          setTimeout(() => {
+            navigate("/");
+            window.location.reload();
+          }, 1500);
+        }
       },
       onError: (error) => {
         toast.error(error.message ?? "An error occurred");

@@ -1,6 +1,6 @@
 import { routes } from "@/lib/routes";
 import { MainNavItem } from "@/types";
-import { Bookmark, Calendar, ReceiptText, ShoppingBag, Ticket, User } from "lucide-react";
+import { Bookmark, Calendar, ReceiptText, Shield, ShoppingBag, Ticket, User } from "lucide-react";
 
 export const siteConfig = {
   name: "Evenly",
@@ -31,6 +31,11 @@ export const siteConfig = {
       icon: Bookmark,
       title: "Favorites",
       href: `/account/${routes.account.favorites}`,
+    },
+    {
+      icon: Shield,
+      title: "Security",
+      href: `/account/${routes.account.security}`,
     },
   ] satisfies MainNavItem[],
   dashboardNav: [

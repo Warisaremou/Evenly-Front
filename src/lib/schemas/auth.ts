@@ -18,6 +18,11 @@ const CONFIRM_PASSWORD_VALIDATION = z.string().min(8, {
   message: "Password must have at least 8 characters",
 });
 
+const OTP_VALIDATION = z
+  .string()
+  .length(6, "Authentication code must contain 6 digit")
+  .regex(/\d/g, "Authentication code must contain only numbers");
+
 export const registerSchema = z.discriminatedUnion("is_Organizer", [
   // User Registration Schema
   z.object({
@@ -59,6 +64,11 @@ export const loginSchema = z.object({
   password: CONFIRM_PASSWORD_VALIDATION,
 });
 
+export const otpSchema = z.object({
+  otp: OTP_VALIDATION,
+});
+
 // Define types based on the schema
 export type Register = z.infer<typeof registerSchema>;
 export type Login = z.infer<typeof loginSchema>;
+export type Otp = z.infer<typeof otpSchema>;

@@ -5,8 +5,8 @@ import AuthGuard from "@/guards/auth";
 import QueryProvider from "@/lib/providers/query-client-provider";
 import { routes } from "@/lib/routes";
 import { Home, NotFound } from "@/pages";
-import { AccountBooks, AccountFavorites, AccountProfile } from "@/pages/account";
-import { Login, Register } from "@/pages/auth";
+import { AccountBooks, AccountFavorites, AccountProfile, AccountSecurity } from "@/pages/account";
+import { Login, Register, ValidateOtp } from "@/pages/auth";
 import { DashboardOrders, DashboardProfile, DashboardTickets } from "@/pages/dashboard";
 import { DashboardAddEvent, DashboardAddTickets, DashboardEditEvent, DashboardEvents } from "@/pages/dashboard/events";
 import { Event, Events } from "@/pages/events";
@@ -58,12 +58,16 @@ export default function App() {
                       path={routes.account.favorites}
                       element={<AccountFavorites />}
                     />
+                    <Route
+                      path={routes.account.security}
+                      element={<AccountSecurity />}
+                    />
                   </Route>
                 </Route>
               </Route>
-              <Route element={<AuthGuard />}>
-                {/* Authentication Routes */}
-                <Route element={<AuthLayout />}>
+              {/* Authentication Routes */}
+              <Route element={<AuthLayout />}>
+                <Route element={<AuthGuard />}>
                   <Route
                     path={routes.auth.login}
                     element={<Login />}
@@ -73,6 +77,12 @@ export default function App() {
                     element={<Register />}
                   />
                 </Route>
+                <Route
+                  path={routes.auth.validateOtp}
+                  element={<ValidateOtp />}
+                />
+              </Route>
+              <Route element={<AuthGuard />}>
                 {/* Dashboard Routes */}
                 <Route
                   path={routes.dashboard.index}

@@ -61,9 +61,12 @@ export interface User {
   lastname: string;
   organizer_name: string | null;
   role: RoleEnum;
+  two_factor_enabled: boolean;
 }
 
 export type UpdateProfile = Omit<OrganizerProfile, "email"> | Omit<AccountProfile, "email">;
+
+export type OTPSecret = { secret: string; qr_code_url: string };
 
 // --------------------- ROLE TYPES --------------------- //
 export interface Role {
@@ -134,11 +137,6 @@ export interface BookTicketPayload {
   ticket_id: string;
   quantity: number;
 }
-
-// export type OrdersListingType = {
-//   order: UserReservation;
-//   ticket_number: number;
-// };
 
 // --------------------- CATEGORIES TYPES --------------------- //
 export interface Category {

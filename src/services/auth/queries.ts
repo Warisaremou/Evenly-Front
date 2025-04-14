@@ -1,6 +1,6 @@
 import api from "@/lib/axios-instance";
-import { Login, Register } from "@/lib/schemas/auth";
-import { ApiResponse, UpdateProfile, User } from "@/types";
+import { Login, Otp, Register } from "@/lib/schemas/auth";
+import { ApiResponse, OTPSecret, UpdateProfile, User } from "@/types";
 
 /**
  * Query to create account
@@ -17,9 +17,9 @@ export const register = async (credentials: Register): Promise<ApiResponse> => {
  * Query to login a user
  *
  * @param {Login} credentials - User credentials
- * @returns Promise<ApiResponse> - Api response
+ * @returns Promise<ApiResponse & { token: string; requires_2fa: boolean }> - Api response
  */
-export const login = async (credentials: Login): Promise<ApiResponse & { token: string }> => {
+export const login = async (credentials: Login): Promise<ApiResponse & { token: string; requires_2fa: boolean }> => {
   const response = await api.post("/users/login", credentials);
   return response.data;
 };
@@ -52,5 +52,47 @@ export const updateProfile = async (credentials: UpdateProfile): Promise<ApiResp
  */
 export const logOut = async (): Promise<ApiResponse> => {
   const response = await api.post("/users/logOut");
+  return response.data;
+};
+
+/**
+ * Query to generate a OTP secret
+ *
+ * @returns Promise<Omit<ApiResponse, "data"> - Api response
+ */
+export const setup2FA = async (): Promise<Omit<ApiResponse, "data"> & OTPSecret> => {
+  const response = await api.post("/2fa/setup");
+  return response.data;
+};
+
+/**
+ * Query to verify and activate 2FA
+ *
+ * @returns Promise<Omit<ApiResponse, "data">> - Api response
+ */
+export const verifyOTP = async (credentials: Otp): Promise<Omit<ApiResponse, "data">> => {
+  const response = await api.post("/2fa/verify", credentials);
+  return response.data;
+};
+
+/**
+ * Query to validate 2FA before being authenticated
+ *
+ * @returns Promise<Omit<ApiResponse, "data"> & { token: string }> - Api response
+ */
+export const validate2FA = async (
+  credentials: Otp & { user_id: string },
+): Promise<Omit<ApiResponse, "data"> & { token: string }> => {
+  const response = await api.post("/2fa/validate", credentials);
+  return response.data;
+};
+
+/**
+ * Query to disable 2 Factor Authentication
+ *
+ * @returns Promise<Omit<ApiResponse, "data">> - Api response
+ */
+export const disable2FA = async (): Promise<Omit<ApiResponse, "data">> => {
+  const response = await api.post("/2fa/disable");
   return response.data;
 };
