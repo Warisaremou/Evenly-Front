@@ -30,7 +30,7 @@ export default function Disable2FA() {
       disabled={isPending}
       onClick={handleDisabled2FA}
     >
-      {isPending && <Loader className="text-grey-100" />}
+      {isPending && <Loader className="text-destructive" />}
       Disable 2FA
       <span className="sr-only">Disable 2FA</span>
     </Button>
